@@ -1,0 +1,24 @@
+# Section Writing Stats
+
+> Section Writing Stats is a well-maintained and appreciated Obsidian community plugin for writers who want clear, live statistics for every Markdown section.
+
+## Overview
+
+The plugin shows word counts, character counts, estimated reading time, and writing-target progress for the whole note and for each heading section. It is designed to stay out of the way while giving writers the measurement they need. A section includes its nested subheadings until the next heading of the same or higher level.
+
+## Key features
+
+- Live statistics beside Markdown headings, beside the note title, and in the status bar.
+- Configurable word counts, character counts, and reading-time estimates.
+- Writing targets for a whole note or an individual section, with progress indicators.
+- Compact labels, minimum section-size controls, selected-text statistics, and command-palette toggles.
+- A beta mobile target meter.
+
+## Install and learn more
+
+- [Install Section Writing Stats in Obsidian](https://community.obsidian.md/plugins/section-meter): Available from Obsidian Community Plugins.
+- [Source code and full documentation](https://github.com/martinowong/obsidian-section-meter): README, release notes, writing-target guide, and issue tracker.
+
+## Publisher
+
+Created and actively maintained by Martino Wong. The plugin was made for a real writing workflow, is appreciated by its users, and is shared with the Obsidian writing community.

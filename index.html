@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Live word counts, character counts, reading-time estimates, and writing targets for every Markdown heading in Obsidian." />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#19171d" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Section Writing Stats" />
+    <meta property="og:title" content="Section Writing Stats for Obsidian - Word Counts & Writing Targets" />
+    <meta property="og:description" content="Live word counts, character counts, reading-time estimates, and writing targets for every Markdown heading in Obsidian." />
+    <title>Section Writing Stats for Obsidian - Word Counts & Writing Targets</title>
+    <link rel="stylesheet" href="landing.css" />
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Section Writing Stats",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Windows, macOS, Linux, iOS, Android",
+        "description": "An Obsidian community plugin that shows live word counts, character counts, reading-time estimates, and writing-target progress for notes and Markdown sections.",
+        "downloadUrl": "https://community.obsidian.md/plugins/section-meter",
+        "codeRepository": "https://github.com/martinowong/obsidian-section-meter",
+        "author": {
+          "@type": "Person",
+          "name": "Martino Wong"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Section Writing Stats home">
+        <span class="wordmark-mark" aria-hidden="true"></span>
+        <span>Section Writing Stats</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="https://github.com/martinowong/obsidian-section-meter">GitHub</a>
+      </nav>
+      <a class="button button-small header-support" href="#support">Support</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-title reveal">
+          <h1 class="hero-shout" aria-label="How much more do you need to write?"><span class="type-row" aria-hidden="true"><span class="type-word type-word-1">HOW</span></span><span class="type-row type-row-much" aria-hidden="true"><span class="type-word type-word-2 type-word-much">MUCH</span><span class="type-word type-word-3">MORE</span></span><span class="type-row" aria-hidden="true"><span class="type-word type-word-4">DO</span><span class="type-word type-word-5">YOU</span><span class="type-word type-word-6">NEED</span><span class="type-word type-word-7">TO</span></span><span class="type-row" aria-hidden="true"><span class="type-word type-word-write">WRIIIIIIIIIIIIIIIIIIIITE??</span></span></h1>
+          <figure class="hero-screenshot">
+            <img src="images/section-writing-stats-obsidian.png" width="1914" height="1688" fetchpriority="high" alt="Section Writing Stats showing heading badges, note statistics, and writing-target progress in Obsidian" />
+          </figure>
+        </div>
+        <div class="hero-copy reveal">
+          <p class="hero-summary hero-promise"><strong>Section Writing Stats</strong> for <span>Obsidian</span> tells you.</p>
+          <div class="question-lanes" aria-label="Questions Section Writing Stats answers">
+            <p class="question-lane question-lane-count">How many <span class="rolling-stat rolling-metric" aria-label="words or characters"><span class="rolling-metric-track"><span>words</span><span>characters</span><span>words</span></span></span><br>are in this <span class="rolling-stat rolling-scope" aria-label="section, subsection, or note"><span class="rolling-scope-track"><span>section?</span><span>subsection?</span><span>note?</span><span>section?</span></span></span></p>
+            <p class="question-lane question-lane-time">How long does it take to<br>read this <span class="rolling-stat rolling-scope" aria-label="section, subsection, or note"><span class="rolling-scope-track"><span>section?</span><span>subsection?</span><span>note?</span><span>section?</span></span></span></p>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="https://community.obsidian.md/plugins/section-meter">Install in Obsidian</a>
+            <a class="button button-repo" href="https://github.com/martinowong/obsidian-section-meter">View on GitHub</a>
+          </div>
+          <p class="download-count" aria-live="polite">Join other <strong><span id="download-count" data-downloads="0" data-fallback-downloads="437">0</span>+</strong> writers that have downloaded Section Writing Stats.</p>
+        </div>
+        <div class="editor-stage reveal reveal-late">
+          <p class="try-prompt">Try typing to see it work.</p>
+          <div class="try-editor hero-editor">
+            <div class="try-editor-bar">
+              <span class="try-tab"><i aria-hidden="true"></i>Scene notes.md</span>
+              <span class="try-mode">Try it</span>
+            </div>
+            <div class="try-heading-row">
+              <span>#</span><strong>Opening scene</strong>
+              <span class="section-meter-badge section-meter-target-badge section-meter-target-start" aria-live="polite">
+                <output class="section-meter-badge-label" id="demo-badge">10 words · 59 characters · 3s</output>
+                <span class="section-meter-target-group"><span class="section-meter-target-caption">Target</span><span class="section-meter-target-label" id="demo-target-count">8%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" id="demo-progress-fill"></i></span></span>
+              </span>
+            </div>
+            <label class="sr-only" for="demo-writing">Try writing a section</label>
+            <textarea id="demo-writing" spellcheck="true">Target: 120 characters
+
+</textarea>
+            <div class="try-footer">
+              <button type="button" id="demo-reset">Reset example</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section" id="features">
+        <div class="section-heading reveal">
+          <h2>What Section Writing Stats can show:</h2>
+        </div>
+        <div class="feature-list">
+          <article class="feature feature-primary reveal">
+            <div>
+              <h3>Live stats where you want them</h3>
+              <p>Show live statistics beside Markdown headings, beside the note title, or in the status bar.</p>
+            </div>
+          </article>
+          <article class="feature reveal">
+            <div>
+              <h3>Words, characters, and reading time</h3>
+              <p>See the measurement you want to track without leaving the note.</p>
+            </div>
+          </article>
+          <article class="feature reveal">
+            <div>
+              <h3>Choose what stays visible</h3>
+              <p>Turn individual statistics on or off, use compact labels, and hide badges for short sections.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="target-section" id="how-it-works">
+        <div class="target-copy reveal">
+          <h2>Set a writing target.</h2>
+          <p>Add a <code>Target: 750 words</code> line below any heading. The plugin shows your progress as you write.</p>
+          <a class="text-link" href="https://github.com/martinowong/obsidian-section-meter#writing-targets">Read the target guide <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="markdown-sample reveal reveal-late" aria-label="Example Markdown writing target">
+          <div class="sample-bar"><span>draft.md</span><span>Markdown</span></div>
+          <div class="sample-heading"><span>#</span><strong>Opening scene</strong><span class="section-meter-badge section-meter-target-badge section-meter-target-mid"><span class="section-meter-badge-label">412 words</span><span class="section-meter-target-group"><span class="section-meter-target-caption">Target</span><span class="section-meter-target-label">55%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" style="width: 55%"></i></span></span></span></div>
+          <pre><code><span class="syntax-target">Target: 750 words</span>
+
+The first paragraph begins here. The target
+line stays in the note, while the badge keeps
+track of the writing.</code></pre>
+          <div class="sample-footer"><span>Section total</span><strong>412 / 750 words</strong></div>
+        </div>
+      </section>
+
+      <section class="faq-section" aria-labelledby="faq-title">
+        <div class="faq-heading reveal">
+          <h2 id="faq-title">A few useful answers.</h2>
+          <p>Everything stays in your Markdown. The plugin adds live context while you write.</p>
+        </div>
+        <div class="faq-list reveal">
+          <details>
+            <summary>What counts as a section?</summary>
+            <p>A heading includes everything beneath it, including nested headings, until the next heading at the same or a higher level.</p>
+          </details>
+          <details>
+            <summary>Can I set a target for one part of a note?</summary>
+            <p>Yes. Add a target line below a heading to track that section, or add one to the note for a whole-note target.</p>
+          </details>
+          <details>
+            <summary>Can I choose where the statistics appear?</summary>
+            <p>Yes. Show them beside headings, beside the note title, in the status bar, or only in the places you want.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="support-section" id="support">
+        <div class="support-layout reveal">
+          <div class="support-copy">
+            <h2>Ciao! I’m <span class="support-name">Martino</span>, the creator of this plugin.</h2>
+            <p>I made it for myself and thought it could be useful.</p>
+            <p>If you want to support me and the development of this plugin, you can tip me here.</p>
+            <div class="support-tip">
+              <span class="support-tip-label">Tip jar</span>
+              <stripe-buy-button
+                buy-button-id="buy_btn_1U2U9LBZ7E4J3C2PV20x16Y0"
+                publishable-key="pk_live_51QSmmABZ7E4J3C2PZJ722tiUnINsko8iq7mGpmrBPlGW8NEKcEDpGhbU9Q8T30tfKAvzZQvdubkgQbM4pyCPtM6d00pWv3S7lW"
+              ></stripe-buy-button>
+            </div>
+          </div>
+          <figure class="support-portrait">
+            <img src="images/martino-wong.jpg" alt="Martino Wong, creator of Section Writing Stats" />
+          </figure>
+          <svg class="support-arrow" viewBox="0 0 520 240" preserveAspectRatio="none" aria-hidden="true">
+            <path class="arrow-stem" id="support-arrow-stem" pathLength="1" d="M -102 -31 C 24 -129, 229 -94, 313 63" />
+          </svg>
+        </div>
+      </section>
+
+      <section class="closing-section">
+        <h2>Keep track as you write.</h2>
+        <p>Install it from Obsidian Community Plugins.</p>
+        <div class="closing-actions">
+          <a class="button" href="https://community.obsidian.md/plugins/section-meter">Get the plugin</a>
+          <a class="button button-repo" href="https://github.com/martinowong/obsidian-section-meter">View on GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Section Writing Stats</span>
+      <span>Created by <a href="https://github.com/martinowong">Martino Wong</a></span>
+    </footer>
+    <script>
+      const revealItems = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("has-reveals");
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          });
+        }, { threshold: 0.16 });
+        revealItems.forEach((item) => revealObserver.observe(item));
+      }
+
+      const writing = document.querySelector("#demo-writing");
+      const badge = document.querySelector("#demo-badge");
+      const reset = document.querySelector("#demo-reset");
+      const targetBadge = document.querySelector(".hero-editor .section-meter-target-badge");
+      const targetProgress = document.querySelector(".hero-editor .section-meter-target-progress");
+      const example = writing.value;
+      const demoSentence = "The pigeon has appointed itself editor-in-chief, and it has notes about every sentence.";
+      let demoTypingTimer;
+      let isDemoTyping = false;
+
+      function updateDemoBadge() {
+        const text = writing.value.replace(/^Target:\s*.*$/gim, "").trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        const characters = text.length;
+        const seconds = Math.max(0, Math.round((words / 220) * 60));
+        badge.textContent = `${words} ${words === 1 ? "word" : "words"} · ${characters} characters · ${seconds}s`;
+        const percent = Math.min(Math.round((characters / 120) * 100), 100);
+        document.querySelector("#demo-target-count").textContent = `${percent}%`;
+        document.querySelector("#demo-progress-fill").style.width = `${percent}%`;
+        const targetState = characters > 120
+          ? "section-meter-target-overage"
+          : percent >= 100
+            ? "section-meter-target-complete"
+            : percent >= 80
+              ? "section-meter-target-close"
+              : percent >= 50
+                ? "section-meter-target-mid"
+                : "section-meter-target-start";
+        const targetStates = ["section-meter-target-start", "section-meter-target-mid", "section-meter-target-close", "section-meter-target-complete", "section-meter-target-overage"];
+        targetBadge.classList.remove(...targetStates);
+        targetProgress.classList.remove(...targetStates);
+        targetBadge.classList.add(targetState);
+        targetProgress.classList.add(targetState);
+      }
+
+      const playDemoTypewriter = () => {
+        window.clearTimeout(demoTypingTimer);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          writing.value = `${example}${demoSentence}`;
+          updateDemoBadge();
+          return;
+        }
+
+        let index = 0;
+        isDemoTyping = true;
+        const typeNextCharacter = () => {
+          if (!isDemoTyping || index >= demoSentence.length) {
+            isDemoTyping = false;
+            return;
+          }
+          writing.value = `${example}${demoSentence.slice(0, index + 1)}`;
+          updateDemoBadge();
+          index += 1;
+          demoTypingTimer = window.setTimeout(typeNextCharacter, index < 18 ? 62 : 24);
+        };
+        typeNextCharacter();
+      };
+
+      writing.addEventListener("input", (event) => {
+        if (event.isTrusted) isDemoTyping = false;
+        if (isDemoTyping) return;
+        window.clearTimeout(demoTypingTimer);
+        updateDemoBadge();
+      });
+      reset.addEventListener("click", () => {
+        writing.value = example;
+        updateDemoBadge();
+        playDemoTypewriter();
+        writing.focus();
+      });
+      updateDemoBadge();
+      demoTypingTimer = window.setTimeout(playDemoTypewriter, 900);
+
+      const downloadCount = document.querySelector("#download-count");
+      const downloadCountUrl = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugin-stats.json";
+      const formatDownloads = (value) => new Intl.NumberFormat().format(value);
+
+      function renderDownloadCount(downloads, animate) {
+        if (!downloadCount) return;
+        const start = Number(downloadCount.dataset.downloads || 0);
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!animate || reducedMotion || start === downloads) {
+          downloadCount.textContent = formatDownloads(downloads);
+          downloadCount.dataset.downloads = String(downloads);
+          return;
+        }
+
+        const duration = 1300;
+        const startedAt = performance.now();
+        const tick = (now) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          downloadCount.textContent = formatDownloads(Math.round(start + (downloads - start) * eased));
+          if (progress < 1) requestAnimationFrame(tick);
+          else downloadCount.dataset.downloads = String(downloads);
+        };
+        requestAnimationFrame(tick);
+      }
+
+      if (downloadCount) {
+        document.documentElement.classList.add("has-download-counter");
+        let currentDownloads = Number(downloadCount.dataset.fallbackDownloads);
+        let hasAnimated = false;
+        const revealDownloads = () => {
+          if (hasAnimated) return;
+          hasAnimated = true;
+          downloadCount.textContent = "0";
+          downloadCount.dataset.downloads = "0";
+          downloadCount.classList.add("is-visible");
+          renderDownloadCount(currentDownloads, true);
+        };
+
+        const downloadObserver = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          revealDownloads();
+          downloadObserver.disconnect();
+        }, { threshold: 0.5 });
+        downloadObserver.observe(downloadCount);
+
+        fetch(downloadCountUrl)
+          .then((response) => response.ok ? response.json() : Promise.reject(new Error("Download statistics are unavailable.")))
+          .then((statistics) => {
+            const downloads = statistics?.["section-meter"]?.downloads;
+            if (!Number.isFinite(downloads)) return;
+            currentDownloads = downloads;
+            if (hasAnimated) renderDownloadCount(downloads, false);
+          })
+          .catch(() => {
+            // The visible fallback keeps the page useful if the public statistics file is unavailable.
+          });
+      }
+
+      const supportLayout = document.querySelector(".support-layout");
+      const liveArrowStem = document.querySelector("#support-arrow-stem");
+      const supportHeading = document.querySelector(".support-copy h2");
+      const supportName = document.querySelector(".support-name");
+      const supportPortrait = document.querySelector(".support-portrait");
+      const liveArrow = document.querySelector(".support-arrow");
+      const arrowAnchors = {
+        start: { x: 0.562, y: -0.098 },
+        end: { x: 0.540, y: -0.050 },
+      };
+      const arrowCurve = {
+        controlOne: { along: 0.114, offset: -0.372 },
+        controlTwo: { along: 0.732, offset: -0.430 },
+      };
+      let hasDrawnArrow = false;
+
+      const pointInLayout = (element, xRatio, yRatio, layoutBounds) => {
+        const bounds = element.getBoundingClientRect();
+        return {
+          x: bounds.left - layoutBounds.left + bounds.width * xRatio,
+          y: bounds.top - layoutBounds.top + bounds.height * yRatio,
+        };
+      };
+
+      const getArrowPoints = () => {
+        const layoutBounds = supportLayout.getBoundingClientRect();
+        const nameBounds = supportName.getBoundingClientRect();
+        const headingBounds = supportHeading.getBoundingClientRect();
+        const start = {
+          x: nameBounds.left - layoutBounds.left + nameBounds.width * arrowAnchors.start.x,
+          y: headingBounds.top - layoutBounds.top + nameBounds.height * arrowAnchors.start.y,
+        };
+        const end = pointInLayout(supportPortrait, arrowAnchors.end.x, arrowAnchors.end.y, layoutBounds);
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const normal = { x: -dy / distance, y: dx / distance };
+        const control = ({ along, offset }) => ({
+          x: start.x + dx * along + normal.x * distance * offset,
+          y: start.y + dy * along + normal.y * distance * offset,
+        });
+        return { start, controlOne: control(arrowCurve.controlOne), controlTwo: control(arrowCurve.controlTwo), end, layoutBounds, normal, distance, dx, dy };
+      };
+
+      const updateArrowCurve = () => {
+        const arrowPoints = getArrowPoints();
+        const { start, controlOne, controlTwo, end, layoutBounds } = arrowPoints;
+        const curvePath = `M ${start.x} ${start.y} C ${controlOne.x} ${controlOne.y}, ${controlTwo.x} ${controlTwo.y}, ${end.x} ${end.y}`;
+        liveArrow.setAttribute("viewBox", `0 0 ${layoutBounds.width} ${layoutBounds.height}`);
+        const angle = Math.atan2(end.y - controlTwo.y, end.x - controlTwo.x);
+        const wing = (offset) => {
+          const length = 35;
+          const x = end.x + Math.cos(angle + Math.PI + offset) * length;
+          const y = end.y + Math.sin(angle + Math.PI + offset) * length;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        };
+        const chevronPath = `M ${wing(-0.66)} L ${end.x},${end.y} L ${wing(0.66)}`;
+        liveArrowStem.setAttribute("d", `${curvePath} ${chevronPath}`);
+      };
+      const drawArrow = () => {
+        if (hasDrawnArrow || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          supportLayout.classList.add("arrow-is-drawn");
+          return;
+        }
+        updateArrowCurve();
+        hasDrawnArrow = true;
+        supportLayout.classList.add("arrow-is-drawn");
+      };
+      const arrowObserver = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        drawArrow();
+        arrowObserver.disconnect();
+      }, { threshold: 0.3 });
+      arrowObserver.observe(supportLayout);
+      new ResizeObserver(updateArrowCurve).observe(supportLayout);
+      new ResizeObserver(updateArrowCurve).observe(supportHeading);
+      new ResizeObserver(updateArrowCurve).observe(supportName);
+      new ResizeObserver(updateArrowCurve).observe(supportPortrait);
+      window.addEventListener("resize", updateArrowCurve);
+      updateArrowCurve();
+
+      const heroScreenshot = document.querySelector(".hero-screenshot");
+      const useScreenshotParallax = heroScreenshot
+        && window.matchMedia("(min-width: 1101px) and (prefers-reduced-motion: no-preference)").matches;
+      if (useScreenshotParallax) {
+        let parallaxX = 0;
+        let parallaxY = 0;
+
+        const updateScreenshotParallax = (time) => {
+          const phase = time / 2500;
+          const idleX = Math.sin(phase) * 0.22;
+          const idleY = Math.cos(phase * 0.82) * 0.2;
+          heroScreenshot.style.setProperty("--screen-x", `${parallaxX * 12 + idleX * 3}px`);
+          heroScreenshot.style.setProperty("--screen-y", `${parallaxY * 10 + idleY * 3}px`);
+          heroScreenshot.style.setProperty("--screen-rx", `${parallaxY * -5 + idleY * 1.2}deg`);
+          heroScreenshot.style.setProperty("--screen-ry", `${parallaxX * 8 + idleX * 2.2}deg`);
+          requestAnimationFrame(updateScreenshotParallax);
+        };
+
+        heroScreenshot.addEventListener("pointermove", (event) => {
+          const bounds = heroScreenshot.getBoundingClientRect();
+          parallaxX = (event.clientX - bounds.left) / bounds.width - 0.5;
+          parallaxY = (event.clientY - bounds.top) / bounds.height - 0.5;
+        });
+        heroScreenshot.addEventListener("pointerleave", () => {
+          parallaxX = 0;
+          parallaxY = 0;
+        });
+        requestAnimationFrame(updateScreenshotParallax);
+      }
+
+    </script>
+  </body>
+</html>
