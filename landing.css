@@ -98,7 +98,7 @@ h1, h2, h3, p { margin-top: 0; }
 h1, h2 { letter-spacing: -0.065em; line-height: 0.96; }
 h1 { max-width: 680px; margin-bottom: 26px; font-size: clamp(3rem, 5vw, 4.65rem); font-weight: 660; }
 .hero-shout { max-width: 100%; margin-bottom: 25px; color: #fffaff; font-size: clamp(3.65rem, 5.1vw, 6.15rem); font-weight: 880; letter-spacing: -0.065em; line-height: 0.8; text-shadow: 6px 6px 0 rgb(92 59 142 / 0.78); }
-.type-row { display: flex; width: max-content; gap: 0.13em; }.type-row + .type-row { margin-top: 0.04em; }.type-word { display: inline-block; }.type-row-much { margin-top: -0.02em; }.type-word-much { margin-left: -0.025em; color: var(--accent-soft); font-size: 1.18em; letter-spacing: -0.085em; }.type-word-write { color: var(--accent-soft); letter-spacing: -0.025em; }
+.type-row { display: flex; width: max-content; gap: 0.13em; }.type-row + .type-row { margin-top: 0.04em; }.type-word { display: inline-block; }.type-row-much { margin-top: -0.02em; }.type-word-much { margin-left: -0.025em; color: var(--accent-soft); font-size: 1.18em; letter-spacing: -0.085em; }.type-word-write { color: var(--accent-soft); letter-spacing: -0.025em; }.write-line { display: inline; }
 .hero-summary { max-width: 450px; margin-bottom: 31px; color: var(--muted); font-size: clamp(1.06rem, 1.5vw, 1.22rem); line-height: 1.55; }
 .hero-promise { max-width: 680px; margin-bottom: 28px; color: var(--muted); font-size: clamp(1.35rem, 2.05vw, 1.82rem); font-weight: 680; line-height: 1.2; letter-spacing: -0.045em; }.hero-promise strong { color: var(--text); font-weight: 820; }.hero-promise span { color: var(--accent-soft); }
 .question-lanes { max-width: 710px; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); margin: 0 0 32px; border: 1px solid rgb(223 204 255 / 0.28); border-radius: 12px 16px 12px 16px; background: rgb(43 35 54 / 0.78); box-shadow: 5px 6px 0 rgb(92 59 142 / 0.24); overflow: hidden; }
@@ -234,6 +234,28 @@ footer > span:first-child { color: var(--muted); font-weight: 650; }
   footer { width: min(100% - 32px, 1280px); padding: 22px 0; flex-wrap: wrap; }
 }
 
+/* Tablets and large phones need the same single-column rhythm as phones.
+   Keeping either of these paired layouts beyond this point makes the copy
+   feel cramped even before it technically overflows. */
+@media (max-width: 700px) {
+  .question-lanes { grid-template-columns: 1fr; max-width: 560px; }
+  .question-lane + .question-lane { border-top: 1px solid rgb(223 204 255 / 0.2); border-inline-start: 0; }
+
+  .support-section { padding-inline: 24px; }
+  .support-section > div { grid-template-columns: 1fr; gap: 34px; }
+  .support-arrow { display: none; }
+  .support-portrait { width: min(100%, 340px); justify-self: center; }
+
+  /* Lead with the promise and actions; the larger product image follows
+     once the visitor has the context for it. */
+  .hero { gap: 42px; }
+  .hero-title { display: contents; }
+  .hero-shout { order: 1; }
+  .hero-copy { order: 2; }
+  .hero-screenshot { order: 3; width: min(100%, 620px); justify-self: start; }
+  .editor-stage { order: 4; }
+}
+
 @media (min-width: 821px) and (max-width: 960px) {
   .site-header { width: min(100% - 40px, 1280px); grid-template-columns: 1fr auto; }.site-header nav { display: none; }
   .hero, .feature-section, .target-section { width: min(100% - 40px, 1280px); grid-template-columns: 1fr; }.hero { min-height: auto; gap: 52px; padding: 64px 0 84px; }.hero-copy { max-width: 680px; }.editor-stage { width: min(100%, 680px); justify-self: start; }
@@ -243,7 +265,7 @@ footer > span:first-child { color: var(--muted); font-weight: 650; }
 
 @media (max-width: 520px) {
   .map-card { display: none; }
-  .wordmark { font-size: 0.9rem; }.hero { padding-top: 54px; }.hero-title { gap: 28px; }.hero-screenshot { width: 100%; }.overline { margin-bottom: 15px; font-size: 0.68rem; }h1 { margin-bottom: 20px; font-size: clamp(3.2rem, 15.8vw, 4.55rem); }.hero-shout { font-size: clamp(3.15rem, 15.3vw, 4.5rem); line-height: 0.84; }.hero-shout .type-row:last-child { width: 100%; }.hero-shout .type-word-write { font-size: 0.48em; letter-spacing: -0.045em; }.hero-summary { font-size: 1rem; }.hero-promise { margin-bottom: 19px; font-size: 1.28rem; }.question-lanes { grid-template-columns: 1fr; margin-bottom: 26px; }.question-lane { min-height: auto; padding: 21px 19px 23px; font-size: 1.28rem; }.question-lane + .question-lane { border-top: 1px solid rgb(223 204 255 / 0.2); border-inline-start: 0; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 17px; }.download-count { font-size: 1.16rem; }.editor-stage { width: 100%; }.hero-editor { min-height: 0; }.section-heading h2, .outline-copy h2, .target-copy h2, .closing-section h2 { font-size: clamp(2.85rem, 14.8vw, 4.2rem); }.feature { display: block; }.feature h3 { font-size: 1.2rem; }.feature p { font-size: 0.95rem; }.try-heading-row { padding: 18px 16px 12px; }.try-heading-row output, .sample-heading .section-meter-badge { width: 100%; margin-left: 0; }.try-editor textarea { min-height: 126px; padding-inline: 16px; font-size: 0.85rem; }.target-section { padding-bottom: 104px; }.faq-section { gap: 34px; padding-bottom: 84px; }pre { padding: 23px 19px 25px; font-size: 0.74rem; }.sample-bar, .sample-footer { padding-inline: 14px; }.closing-section { min-height: 435px; }.closing-actions { flex-direction: column; align-items: center; }.closing-section .button { width: 100%; max-width: 290px; }.support-section { padding: 76px 24px; }.support-section > div { grid-template-columns: 1fr; gap: 34px; }.support-arrow { display: none; }.support-portrait { width: min(100%, 300px); justify-self: center; }.support-section h2 { font-size: clamp(2.4rem, 12vw, 3.45rem); }.support-tip { width: 100%; max-width: 290px; }.arrow-adjustments code { font-size: 0.66rem; }footer { display: grid; gap: 11px; }
+  .wordmark { font-size: 0.9rem; }.hero { padding-top: 54px; }.hero-title { gap: 28px; }.hero-screenshot { width: 100%; }.overline { margin-bottom: 15px; font-size: 0.68rem; }h1 { margin-bottom: 20px; font-size: clamp(3.2rem, 15.8vw, 4.55rem); }.hero-shout { font-size: clamp(2.9rem, 13.2vw, 4rem); line-height: 0.84; letter-spacing: -0.07em; }.hero-shout .type-row { max-width: 100%; gap: 0.08em; }.hero-shout .type-row:nth-child(3) { flex-wrap: wrap; }.hero-shout .type-row:last-child { width: 100%; }.hero-shout .type-word-write { width: 100%; font-size: 1.44em; letter-spacing: -0.04em; line-height: 0.84; white-space: normal; animation: none; border-right: 0; }.hero-shout .write-line { display: block; }.hero-summary { font-size: 1rem; }.hero-promise { margin-bottom: 19px; font-size: 1.28rem; }.question-lanes { margin-bottom: 26px; }.question-lane { min-height: auto; padding: 21px 19px 23px; font-size: 1.28rem; }.hero-actions { align-items: stretch; flex-direction: column; gap: 13px; }.hero-actions .button { width: min(100%, 290px); }.download-count { max-width: 100%; overflow-wrap: anywhere; font-size: 1.16rem; }.editor-stage { width: 100%; }.hero-editor { min-height: 0; }.section-heading h2, .outline-copy h2, .target-copy h2, .closing-section h2 { font-size: clamp(2.85rem, 14.8vw, 4.2rem); }.feature { display: block; }.feature h3 { font-size: 1.2rem; }.feature p { font-size: 0.95rem; }.try-heading-row { padding: 18px 16px 12px; }.try-heading-row output, .sample-heading .section-meter-badge { width: 100%; margin-left: 0; }.try-editor textarea { min-height: 126px; padding-inline: 16px; font-size: 0.85rem; }.target-section { padding-bottom: 104px; }.faq-section { gap: 34px; padding-bottom: 84px; }pre { padding: 23px 19px 25px; font-size: 0.74rem; }.sample-bar, .sample-footer { padding-inline: 14px; }.closing-section { min-height: 435px; }.closing-actions { flex-direction: column; align-items: center; }.closing-section .button { width: 100%; max-width: 290px; }.support-section { padding: 76px 24px; }.support-portrait { width: min(100%, 300px); }.support-section h2 { font-size: clamp(2.4rem, 12vw, 3.45rem); }.support-tip { width: 100%; max-width: 290px; }.arrow-adjustments code { font-size: 0.66rem; }footer { display: grid; gap: 11px; }
 }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
