@@ -168,6 +168,8 @@ pre { overflow: auto; margin: 0; padding: 28px 30px 31px; font-family: ui-monosp
 .faq-list summary::after { content: "+"; position: absolute; top: 50%; right: 4px; color: var(--accent-soft); font-size: 1.35rem; font-weight: 400; transform: translateY(-52%); transition: transform 180ms ease; }
 .faq-list details[open] summary::after { transform: translateY(-52%) rotate(45deg); }
 .faq-list p { max-width: 600px; margin: 0; padding: 0 0 23px; color: var(--muted); line-height: 1.6; }
+.faq-list code { padding: 0.08em 0.3em; border: 1px solid rgb(223 204 255 / 0.24); border-radius: 4px; background: rgb(184 140 255 / 0.1); color: var(--accent-soft); font: 0.88em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: nowrap; }
+@media (min-width: 821px) { .faq-heading { position: sticky; top: 32px; align-self: start; } }
 
 .closing-section { min-height: 490px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 96px 24px; border-top: 1px solid rgb(184 140 255 / 0.45); background: #271c36; text-align: center; }
 .closing-section .overline { margin-bottom: 18px; }.closing-section h2 { margin-bottom: 20px; }.closing-section > p:not(.overline) { max-width: 420px; margin-bottom: 29px; color: var(--muted); font-size: 1.08rem; }

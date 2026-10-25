@@ -202,9 +202,10 @@
 .p-targets-copy code { padding: 0.08em 0.3em; border: 1px solid rgb(223 204 255 / 0.24); border-radius: 4px; background: rgb(184 140 255 / 0.1); color: var(--accent-soft); font: 0.88em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
 .p-controls { display: grid; gap: 18px; margin-bottom: 30px; }
+.p-targets-copy > p.p-controls-hint { margin: -12px 0 22px; color: var(--accent-soft); font-size: 0.95rem; }
 
 .p-segmented { margin: 0; padding: 0; border: 0; }
-.p-segmented legend, .p-range span { margin-bottom: 8px; padding: 0; color: var(--faint); font-size: 0.78rem; font-weight: 700; }
+.p-segmented legend { margin-bottom: 8px; padding: 0; color: var(--faint); font-size: 0.78rem; font-weight: 700; }
 .p-segmented div { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: rgb(255 255 255 / 0.04); }
 .p-segmented label { position: relative; }
 .p-segmented input { position: absolute; opacity: 0; pointer-events: none; }
@@ -212,10 +213,6 @@
 .p-segmented input:checked + span { background: var(--surface-raised); color: var(--text); box-shadow: inset 0 0 0 1px rgb(223 204 255 / 0.3); }
 .p-segmented input:focus-visible + span { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
 
-.p-range { display: grid; max-width: 420px; }
-.p-range span { display: flex; justify-content: space-between; }
-.p-range output { color: var(--text); font-variant-numeric: tabular-nums; }
-.p-range input { width: 100%; accent-color: var(--accent); }
 
 .p-target-demo .of-body { padding-bottom: 26px; }
 .p-target-line { min-height: 1.9rem; display: flex; align-items: center; margin-bottom: 10px; }
