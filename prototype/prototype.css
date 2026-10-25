@@ -1,0 +1,248 @@
+/* Redesign prototype. Badge, chip, and progress styles come from plugin.css,
+   a copy of the plugin's own styles.css, so the site always matches a release. */
+
+:root {
+  --interactive-accent: #8a5cf5;
+  --color-green: #3f9a5c;
+  --color-orange: #d9781f;
+}
+
+/* Obsidian's light theme, scoped to the product mock-ups. */
+.obsidian-frame {
+  --background-primary: #ffffff;
+  --background-secondary: #f6f6f6;
+  --background-modifier-hover: rgb(0 0 0 / 0.065);
+  --background-modifier-active-hover: rgb(138 92 245 / 0.12);
+  --background-modifier-border: #e3e3e3;
+  --background-modifier-border-hover: #d2d2d2;
+  --text-normal: #222222;
+  --text-muted: #5c5c5c;
+  --text-faint: #a3a3a3;
+  --font-interface: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  --font-ui-small: 13px;
+  --font-ui-smaller: 12px;
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-interface);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 34px 80px rgb(6 2 14 / 0.55), 8px 9px 0 rgb(92 59 142 / 0.35);
+}
+
+.obsidian-frame:focus-within {
+  box-shadow: 0 0 0 3px rgb(184 140 255 / 0.7), 0 34px 80px rgb(6 2 14 / 0.55), 8px 9px 0 rgb(92 59 142 / 0.35);
+}
+
+.of-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 42px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.of-lights { display: inline-flex; gap: 8px; }
+.of-lights i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; }
+.of-lights i:nth-child(2) { background: #febc2e; }
+.of-lights i:nth-child(3) { background: #28c840; }
+
+.of-tab {
+  align-self: flex-end;
+  padding: 7px 16px 9px;
+  border: 1px solid var(--background-modifier-border);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: var(--background-primary);
+  color: var(--text-normal);
+}
+
+.of-hint { margin-left: auto; color: #7a52d6; font-weight: 600; }
+
+.of-body { padding: 26px clamp(20px, 4vw, 40px) 14px; }
+
+.of-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+  margin: 0 0 12px;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.of-heading .section-meter-badge { font-size: 0.52em; }
+
+.of-editor { position: relative; }
+
+.of-editor textarea {
+  width: 100%;
+  min-height: 10.4em;
+  display: block;
+  resize: none;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-normal);
+  font: 1.02rem/1.75 var(--font-interface);
+}
+
+/* Covers the first line with a chip, like Live Preview, until the cursor moves onto it. */
+.of-chip-line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1.785rem;
+  display: flex;
+  align-items: center;
+  background: var(--background-primary);
+}
+.of-chip-line[hidden] { display: none; }
+
+.obsidian-frame button.section-meter-target-chip { border: 0; font: inherit; font-size: var(--font-ui-small); }
+.section-meter-target-chip-icon svg,
+.section-meter-target-caption svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+.of-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  padding: 4px 14px;
+  border-top: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.of-status .section-meter-status-bar-part { display: inline-flex; flex-wrap: nowrap; min-width: 0; align-items: center; gap: 0.4em; }
+.of-status .section-meter-target-progress { inline-size: 2.75em; grid-column: auto; }
+
+.of-status button {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #7a52d6;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.of-status button:hover { color: #4f2fa3; }
+.of-status button:focus-visible { outline: 2px solid #7a52d6; outline-offset: 2px; border-radius: 3px; }
+
+/* Hero: the answer and the install button sit in the first screen, the product beside them. */
+.p-hero {
+  width: min(100% - 48px, 1280px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 5vw, 76px);
+  align-items: center;
+  padding: clamp(32px, 6vh, 72px) 0 clamp(48px, 8vh, 88px);
+}
+
+.p-hero .hero-title { display: block; grid-column: auto; perspective: none; }
+.p-hero .hero-shout { margin-bottom: 30px; font-size: clamp(2.8rem, 4.5vw, 4.9rem); }
+
+.p-answer {
+  max-width: 520px;
+  margin: 0 0 30px;
+  color: var(--muted);
+  font-size: clamp(1.12rem, 1.45vw, 1.3rem);
+  line-height: 1.5;
+}
+.p-answer strong { color: var(--text); }
+
+.p-facts {
+  width: min(100% - 48px, 1280px);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 14px 32px;
+  padding: 22px 0;
+  border-block: 1px solid var(--line);
+  color: var(--muted);
+  font-weight: 600;
+  list-style: none;
+}
+.p-facts li { display: flex; align-items: baseline; gap: 0.4em; }
+.p-facts strong { color: var(--accent-soft); font-size: 1.15rem; }
+
+/* Features keep their copy; the real screenshot now illustrates them. */
+.p-features .feature-list { align-self: start; }
+.p-features-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 90px); align-items: center; }
+.p-features-shot { margin: 0; }
+.p-features-shot img { width: 100%; height: auto; display: block; }
+
+/* Targets: one live example the visitor can steer. */
+.p-targets {
+  width: min(100% - 48px, 1280px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 7vw, 110px);
+  align-items: center;
+  padding: 120px 0 140px;
+  border-top: 1px solid var(--line);
+}
+.p-targets h2 { margin-bottom: 22px; }
+.p-targets-copy > p { max-width: 460px; margin: 0 0 30px; color: var(--muted); font-size: 1.08rem; line-height: 1.6; }
+.p-targets-copy code { padding: 0.08em 0.3em; border: 1px solid rgb(223 204 255 / 0.24); border-radius: 4px; background: rgb(184 140 255 / 0.1); color: var(--accent-soft); font: 0.88em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.p-controls { display: grid; gap: 18px; margin-bottom: 30px; }
+
+.p-segmented { margin: 0; padding: 0; border: 0; }
+.p-segmented legend, .p-range span { margin-bottom: 8px; padding: 0; color: var(--faint); font-size: 0.78rem; font-weight: 700; }
+.p-segmented div { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: rgb(255 255 255 / 0.04); }
+.p-segmented label { position: relative; }
+.p-segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.p-segmented label span { display: block; padding: 7px 14px; border-radius: 9px; color: var(--muted); font-size: 0.9rem; font-weight: 650; cursor: pointer; transition: background-color 160ms ease, color 160ms ease; }
+.p-segmented input:checked + span { background: var(--surface-raised); color: var(--text); box-shadow: inset 0 0 0 1px rgb(223 204 255 / 0.3); }
+.p-segmented input:focus-visible + span { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+
+.p-range { display: grid; max-width: 420px; }
+.p-range span { display: flex; justify-content: space-between; }
+.p-range output { color: var(--text); font-variant-numeric: tabular-nums; }
+.p-range input { width: 100%; accent-color: var(--accent); }
+
+.p-target-demo .of-body { padding-bottom: 26px; }
+.p-target-line { min-height: 1.9rem; display: flex; align-items: center; margin-bottom: 10px; }
+.p-target-line code { color: var(--text-normal); font: 0.98rem/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.p-target-demo p { margin: 0; color: var(--text-normal); font-size: 1.02rem; line-height: 1.75; }
+
+@media (max-width: 960px) {
+  .p-hero, .p-targets, .p-features-layout { grid-template-columns: minmax(0, 1fr); }
+  .p-hero { min-height: 0; padding-top: 36px; }
+  .p-targets { padding: 88px 0 100px; }
+  .p-facts { justify-content: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .p-hero, .p-facts, .p-targets { width: min(100% - 32px, 1280px); }
+  .p-hero .hero-shout { font-size: clamp(2.7rem, 12.5vw, 3.8rem); }
+  .of-hint { display: none; }
+  /* The heading badge already shows the counts; keep the status bar to the target. */
+  #demo-status > span:first-child, #demo-status > .section-meter-status-bar-separator { display: none; }
+}
+
+/* Type the headline to its measured width, so it never overflows the column. */
+@media (prefers-reduced-motion: no-preference) {
+  .p-hero .hero-title.is-visible .type-word-write { animation-name: p-type-write, caret-blink; }
+  @keyframes p-type-write { to { width: var(--write-width, 26ch); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-segmented label span { transition: none; }
+}

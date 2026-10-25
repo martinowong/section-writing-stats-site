@@ -1,0 +1,798 @@
+body {
+  --section-meter-progress-start: var(--interactive-accent);
+  --section-meter-progress-mid: var(--interactive-accent);
+  --section-meter-progress-close: var(--interactive-accent);
+  --section-meter-progress-complete: var(--color-green);
+  --section-meter-progress-overage: var(--color-orange);
+  --section-meter-progress-complete-text: var(--color-green);
+  --section-meter-progress-overage-text: var(--color-orange);
+}
+
+body.section-meter-classic-target-colors {
+  --section-meter-progress-start: var(--text-faint);
+  --section-meter-progress-mid: var(--color-yellow);
+  --section-meter-progress-close: color-mix(in srgb, var(--color-green) 62%, transparent);
+  --section-meter-progress-complete: var(--color-green);
+  --section-meter-progress-overage: var(--color-red);
+  --section-meter-progress-complete-text: var(--text-normal);
+  --section-meter-progress-overage-text: var(--text-normal);
+}
+
+.section-meter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  margin-inline-start: 0.6em;
+  padding: 0.12em 0.65em;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--background-modifier-hover);
+  font-family: var(--font-interface);
+  font-size: 0.66em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  vertical-align: middle;
+  white-space: nowrap;
+  pointer-events: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+.section-meter-badge-label {
+  min-inline-size: 0;
+}
+
+.section-meter-badge-action {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.section-meter-badge-action {
+  transition: color 120ms ease;
+}
+
+.section-meter-badge-action:hover {
+  color: var(--text-normal);
+}
+
+.section-meter-badge-action:focus-visible {
+  outline: 2px solid var(--interactive-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.section-meter-target-label {
+  color: var(--text-normal);
+}
+
+.section-meter-target-separator {
+  color: var(--text-faint);
+}
+
+.section-meter-target-badge {
+  color: var(--text-normal);
+}
+
+.section-meter-target-group {
+  display: inline-flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: 0.4em;
+  padding-inline-start: 0.6em;
+  border-inline-start: 1px solid var(--background-modifier-border-hover);
+}
+
+.section-meter-target-caption {
+  display: inline-flex;
+  color: var(--text-faint);
+}
+
+.section-meter-target-caption svg {
+  inline-size: 1.1em;
+  block-size: 1.1em;
+  stroke-width: 2.25px;
+}
+
+.section-meter-target-progress {
+  display: inline-flex;
+  inline-size: 3.25em;
+  block-size: 0.3em;
+  overflow: hidden;
+  flex: none;
+  border-radius: 999px;
+  background: var(--background-modifier-border);
+}
+
+.section-meter-target-progress-fill {
+  display: block;
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--text-faint);
+  transition: inline-size 240ms ease, background-color 240ms ease;
+}
+
+.section-meter-badge > .section-meter-target-separator {
+  display: none;
+}
+
+.section-meter-target-start .section-meter-target-progress-fill {
+  background: var(--section-meter-progress-start);
+}
+
+.section-meter-target-mid .section-meter-target-progress-fill {
+  background: var(--section-meter-progress-mid);
+}
+
+.section-meter-target-close .section-meter-target-progress-fill {
+  background: var(--section-meter-progress-close);
+}
+
+.section-meter-target-complete .section-meter-target-progress-fill {
+  background: var(--section-meter-progress-complete);
+}
+
+.section-meter-target-overage .section-meter-target-progress-fill {
+  background: var(--section-meter-progress-overage);
+}
+
+.section-meter-target-label.section-meter-target-complete {
+  color: var(--section-meter-progress-complete-text);
+}
+
+.section-meter-target-label.section-meter-target-overage {
+  color: var(--section-meter-progress-overage-text);
+}
+
+/* A non-colour cue, so a reached target is clear in every colour scheme. */
+.section-meter-target-label.section-meter-target-complete::before,
+.section-meter-mobile-current-section-label.section-meter-target-complete::before {
+  content: "✓\00a0";
+}
+
+.cm-content .section-meter-badge,
+.cm-content .section-meter-badge * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.cm-line .section-meter-badge {
+  opacity: 0.85;
+  transition: opacity 120ms ease;
+}
+
+.cm-line .section-meter-badge:hover {
+  opacity: 1;
+}
+
+.section-meter-target-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--background-modifier-hover);
+  font-family: var(--font-interface);
+  font-size: var(--font-ui-small);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.section-meter-target-chip:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-active-hover);
+}
+
+.section-meter-target-chip-icon {
+  display: inline-flex;
+  color: var(--interactive-accent);
+}
+
+.section-meter-target-chip-icon svg {
+  inline-size: 1.05em;
+  block-size: 1.05em;
+  stroke-width: 2.25px;
+}
+
+.section-meter-target-chip-value {
+  color: var(--text-normal);
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-meter-badge-action,
+  .section-meter-target-progress-fill,
+  .cm-line .section-meter-badge,
+  .section-meter-target-chip {
+    transition: none;
+  }
+}
+
+.section-meter-reading-badge {
+  max-inline-size: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+
+.section-meter-title-row > .inline-title {
+  margin-block-end: 2px;
+}
+
+.markdown-source-view.mod-cm6 .section-meter-title-row .section-meter-title-badge,
+.markdown-preview-view .section-meter-title-row .section-meter-title-badge,
+.section-meter-title-row .section-meter-title-badge {
+  display: flex;
+  position: static;
+  inset: auto;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: var(--font-ui-small);
+  vertical-align: middle;
+  transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.is-mobile .markdown-source-view.mod-cm6 .section-meter-title-row .section-meter-title-badge,
+body.is-mobile .markdown-preview-view .section-meter-title-row .section-meter-title-badge,
+body.is-mobile .section-meter-title-row .section-meter-title-badge,
+.is-mobile .markdown-source-view.mod-cm6 .section-meter-title-row .section-meter-title-badge,
+.is-mobile .markdown-preview-view .section-meter-title-row .section-meter-title-badge,
+.is-mobile .section-meter-title-row .section-meter-title-badge {
+  position: static;
+  inset: auto;
+  max-inline-size: 100%;
+  box-sizing: border-box;
+  margin-inline-start: 0;
+  margin-block-start: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+body.is-mobile .section-meter-badge.section-meter-target-badge,
+.is-mobile .section-meter-badge.section-meter-target-badge {
+  display: inline-grid;
+  border-radius: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4em;
+  inline-size: min(100%, 28rem);
+  margin-block-start: 0.35em;
+  padding: 0.45em 0.7em 0.55em;
+  vertical-align: top;
+  white-space: normal;
+}
+
+body.is-mobile .section-meter-target-group,
+.is-mobile .section-meter-target-group {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.35em 0.6em;
+  align-items: baseline;
+  padding: 0.4em 0 0;
+  border-block-start: 1px solid var(--background-modifier-border);
+  border-inline-start: 0;
+}
+
+body.is-mobile .section-meter-target-label,
+.is-mobile .section-meter-target-label {
+  text-align: end;
+  white-space: nowrap;
+}
+
+body.is-mobile .section-meter-target-progress,
+.is-mobile .section-meter-target-progress {
+  grid-column: 1 / -1;
+  inline-size: 100%;
+}
+
+@media (max-width: 700px) {
+  .markdown-source-view.mod-cm6 .section-meter-title-row .section-meter-title-badge,
+  .markdown-preview-view .section-meter-title-row .section-meter-title-badge,
+  .section-meter-title-row .section-meter-title-badge {
+    position: static;
+    inset: auto;
+    max-inline-size: 100%;
+    box-sizing: border-box;
+    margin-inline-start: 0;
+    margin-block-start: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+  }
+
+  .section-meter-badge.section-meter-target-badge {
+    display: inline-grid;
+    border-radius: 10px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4em;
+    inline-size: min(100%, 28rem);
+    margin-block-start: 0.35em;
+    padding: 0.45em 0.7em 0.55em;
+    vertical-align: top;
+    white-space: normal;
+  }
+
+  .section-meter-target-group {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.35em 0.6em;
+    align-items: baseline;
+    padding: 0.4em 0 0;
+    border-block-start: 1px solid var(--background-modifier-border);
+    border-inline-start: 0;
+  }
+
+  .section-meter-target-label {
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .section-meter-target-progress {
+    grid-column: 1 / -1;
+    inline-size: 100%;
+  }
+}
+
+.section-meter-setting-guidance {
+  margin-block-start: 0.35em;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  line-height: 1.35;
+}
+
+.section-meter-settings-preview-row,
+.section-meter-settings-preview-build-row {
+  display: block;
+  padding: 0;
+  border: 0;
+}
+
+.section-meter-settings-preview-group {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 5;
+}
+
+.section-meter-settings-preview {
+  margin-block: 0 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  background: var(--background-secondary);
+}
+
+.section-meter-settings-preview-static {
+  position: static;
+}
+
+.section-meter-settings-preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.45rem;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+  font-weight: 600;
+}
+
+.section-meter-settings-preview-build {
+  margin-block: 0.15rem 0.65rem;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.section-meter-settings-preview-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.55rem;
+  align-items: start;
+}
+
+.section-meter-settings-preview-example {
+  min-inline-size: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  background: var(--background-primary);
+}
+
+.section-meter-settings-preview-example-label {
+  margin-block-end: 0.35rem;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-meter-settings-preview-heading-sample {
+  display: flex;
+  min-inline-size: 0;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.section-meter-settings-preview-heading-sample > span:not(
+  .section-meter-settings-preview-heading-marker
+) {
+  min-inline-size: max-content;
+  white-space: nowrap;
+}
+
+.section-meter-settings-preview-heading-marker {
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+.section-meter-settings-preview-badge {
+  flex: none;
+  margin-inline-start: 0.15rem;
+}
+
+.section-meter-settings-preview-statusbar {
+  display: flex;
+  min-block-size: 1.65rem;
+  align-items: center;
+  padding: 0.25rem 0.4rem;
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  color: var(--text-muted);
+  background: var(--background-primary-alt);
+  font-size: var(--font-ui-smaller);
+}
+
+.section-meter-settings-preview-statusbar-content {
+  display: inline-flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.section-meter-settings-preview-statusbar .section-meter-status-bar-part {
+  flex: none;
+  white-space: nowrap;
+}
+
+.section-meter-settings-preview-statusbar-segment {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.section-meter-settings-preview-statusbar-empty {
+  color: var(--text-faint);
+}
+
+.section-meter-status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.section-meter-status-bar-hidden {
+  display: none;
+}
+
+.section-meter-status-bar-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  white-space: nowrap;
+}
+
+.section-meter-status-bar-separator,
+.section-meter-status-bar-target-label {
+  color: var(--text-muted);
+}
+
+.section-meter-status-bar .section-meter-target-progress {
+  inline-size: 2.75em;
+  block-size: 0.3em;
+}
+
+.section-meter-status-bar-selection {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.section-meter-status-bar-selection-hidden {
+  display: none;
+}
+
+.section-meter-mobile-current-section {
+  display: none;
+}
+
+body.is-mobile .section-meter-mobile-current-section,
+.is-mobile .section-meter-mobile-current-section {
+  position: fixed;
+  z-index: 30;
+  inset-inline: 0.75rem;
+  inset-block-end: calc(
+    var(--keyboard-height, 0px)
+    + var(--mobile-toolbar-height, 48px)
+    + var(--safe-area-inset-bottom, 0px)
+    + 0.5rem
+  );
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  max-inline-size: 25.5rem;
+  block-size: 2.55rem;
+  margin-inline: auto;
+  padding-inline: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--background-modifier-border) 84%, transparent);
+  border-radius: 999px;
+  color: var(--text-normal);
+  background: color-mix(in srgb, var(--background-primary) 82%, transparent);
+  box-shadow: 0 0.45rem 1.1rem color-mix(in srgb, var(--background-primary-alt) 46%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background-primary-alt) 50%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+  font-family: var(--font-interface);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.is-mobile .section-meter-mobile-current-section-current,
+body.is-mobile .section-meter-mobile-current-section-target,
+.is-mobile .section-meter-mobile-current-section-current,
+.is-mobile .section-meter-mobile-current-section-target {
+  block-size: 1.75rem;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  font: inherit;
+  font-variant-numeric: inherit;
+  line-height: inherit;
+}
+
+body.is-mobile .section-meter-mobile-current-section-current,
+.is-mobile .section-meter-mobile-current-section-current {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-inline-size: 3.5em;
+  overflow: hidden;
+  color: var(--text-normal);
+  font-weight: 600;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.is-mobile .section-meter-mobile-current-section-target,
+.is-mobile .section-meter-mobile-current-section-target {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0.7rem;
+  align-items: center;
+  min-inline-size: 0;
+  padding-inline: 0;
+}
+
+.section-meter-mobile-current-section-label {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: end;
+  block-size: 1.75rem;
+  min-inline-size: 3em;
+  max-inline-size: 46%;
+  overflow: hidden;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  font: inherit;
+  font-weight: 600;
+  text-align: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.section-meter-mobile-current-section-progress {
+  display: block;
+  flex: 1 1 auto;
+  inline-size: auto;
+  block-size: 0.38rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--background-modifier-border);
+}
+
+.section-meter-mobile-current-section-progress-fill {
+  display: block;
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--text-faint);
+}
+
+.section-meter-mobile-current-section-progress.section-meter-target-start
+  .section-meter-mobile-current-section-progress-fill {
+  background: var(--section-meter-progress-start);
+}
+
+.section-meter-mobile-current-section-progress.section-meter-target-mid
+  .section-meter-mobile-current-section-progress-fill {
+  background: var(--section-meter-progress-mid);
+}
+
+.section-meter-mobile-current-section-progress.section-meter-target-close
+  .section-meter-mobile-current-section-progress-fill {
+  background: var(--section-meter-progress-close);
+}
+
+.section-meter-mobile-current-section-progress.section-meter-target-complete
+  .section-meter-mobile-current-section-progress-fill {
+  background: var(--section-meter-progress-complete);
+}
+
+.section-meter-mobile-current-section-progress.section-meter-target-overage
+  .section-meter-mobile-current-section-progress-fill {
+  background: var(--section-meter-progress-overage);
+}
+
+body.is-mobile .section-meter-mobile-current-section-target:active,
+.is-mobile .section-meter-mobile-current-section-target:active {
+  opacity: 0.68;
+}
+
+body.is-mobile .section-meter-mobile-current-section[data-position="top"],
+.is-mobile .section-meter-mobile-current-section[data-position="top"] {
+  inset-block-start: calc(
+    var(--safe-area-inset-top, 0px)
+    + var(--header-height, 40px)
+    + 0.05rem
+  );
+  inset-block-end: auto;
+}
+
+body.is-mobile
+  .section-meter-mobile-current-section.section-meter-mobile-current-section-dragging,
+.is-mobile
+  .section-meter-mobile-current-section.section-meter-mobile-current-section-dragging {
+  inset-block-start: var(--section-meter-drag-top);
+  inset-block-end: auto;
+  cursor: grabbing;
+  box-shadow: none;
+  opacity: 0.96;
+}
+
+.section-meter-mobile-current-section-count,
+.section-meter-mobile-current-section[data-display-mode="count"]
+  .section-meter-mobile-current-section-percentage {
+  display: none;
+}
+
+.section-meter-mobile-current-section[data-display-mode="count"]
+  .section-meter-mobile-current-section-count {
+  display: inline;
+}
+
+.section-meter-target-presets {
+  margin-block: 0.75rem 0.5rem;
+}
+
+.section-meter-target-preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-block-start: 0.45rem;
+}
+
+.section-meter-target-preset {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+  box-shadow: none;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.section-meter-target-preset:hover {
+  border-color: var(--interactive-accent);
+  background: var(--background-modifier-active-hover);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body.is-mobile .section-meter-mobile-current-section,
+  .is-mobile .section-meter-mobile-current-section {
+    background: var(--background-primary);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+body.is-mobile
+  .section-meter-mobile-current-section.section-meter-mobile-current-section-hidden,
+.is-mobile
+  .section-meter-mobile-current-section.section-meter-mobile-current-section-hidden {
+  display: none;
+}
+
+.section-meter-settings-preview-pin {
+  color: var(--text-faint);
+}
+
+.section-meter-settings-preview-pin.is-active {
+  color: var(--interactive-accent);
+}
+
+.section-meter-settings-preview-slot {
+  min-inline-size: 0;
+}
+
+.section-meter-settings-preview-slot > .section-meter-settings-preview-example {
+  block-size: 100%;
+  box-sizing: border-box;
+}
+
+.section-meter-setting-chips {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.setting-item-control .section-meter-setting-chip {
+  margin: 0;
+  padding-inline: 0.85em;
+  border-radius: 999px;
+  font-size: var(--font-ui-small);
+}
+
+.section-meter-setting-chip:not(.mod-cta) {
+  color: var(--text-muted);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--background-modifier-border-hover);
+}
+
+.section-meter-setting-chip:not(.mod-cta):hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+/* The plugin keeps the visible settings still while the preview resizes. */
+.section-meter-settings-scroller {
+  overflow-anchor: none;
+}
