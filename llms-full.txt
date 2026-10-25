@@ -1,0 +1,273 @@
+# Section Writing Stats
+
+> Section Writing Stats is a free, open-source Obsidian community plugin that shows live word counts, character counts, reading-time estimates, and writing-target progress for every Markdown heading section, the whole note, and selected text.
+
+A section includes its nested subheadings until the next heading of the same or a higher level. Writing targets are ordinary Markdown lines such as `Target: 750 words`, so notes stay portable. The plugin works on desktop and mobile, needs Obsidian 1.13 or later, and makes no network requests.
+
+## Key features
+
+- Live statistics beside Markdown headings, below the note title, and in the status bar, in both the editor and Reading view.
+- Word counts, character counts (with or without spaces), and reading-time estimates at an adjustable reading speed.
+- Writing targets in words, characters, or reading time for a whole note or any section, with progress labels as a count, percentage, or amount remaining.
+- Target lines shown as editable chips in Live Preview; progress turns green with a check when a target is reached.
+- Selected-text statistics, compact labels, hiding of short sections, command-palette toggles, and an optional sticky target meter on mobile.
+
+## Links
+
+- [Install in Obsidian](https://community.obsidian.md/plugins/section-meter): Obsidian Community Plugins page.
+- [Website](https://martinowong.github.io/section-writing-stats-site/): overview and an interactive example.
+- [Source code and documentation](https://github.com/martinowong/obsidian-section-meter): README, writing-target guide, and issue tracker.
+- [Release notes](https://github.com/martinowong/obsidian-section-meter/releases): what changed in each version.
+- [Full documentation for LLMs](https://martinowong.github.io/section-writing-stats-site/llms-full.txt): this file plus the complete README.
+
+## Publisher
+
+Created and maintained by Martino Wong, released under the MIT License.
+
+## Frequently asked questions
+
+### What does Section Writing Stats do?
+
+It shows live word counts, character counts, and reading-time estimates beside every Markdown heading, below the note title, and in the status bar, and it tracks writing targets for a whole note or a single section.
+
+### What counts as a section?
+
+A heading includes everything beneath it, including nested headings, until the next heading at the same or a higher level. A chapter's count therefore includes all of its scenes.
+
+### How do I set a writing target?
+
+Put the cursor in a section and run Set or edit current-section writing target from the command palette, or type a line such as `Target: 750 words` below the heading yourself. A target above the first heading applies to the whole note.
+
+### Which target formats work?
+
+Words, characters, or reading time: `Target: 250 words`, `target 250w`, `Target: 1800 chars`, `Target: 3m`, `Target: 2m 30s`, or `Target: 45s`. The line must stand on its own and include a unit, and `Target` is case-insensitive.
+
+### Can a section have its own target inside a larger one?
+
+Yes. A parent heading's target covers all of its subsections, and a nested heading can define its own target, which takes priority while you write in that subsection.
+
+### Do targets change my notes or lock me in?
+
+No. A target is an ordinary line of Markdown that stays in the note and works without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.
+
+### What is excluded from the counts?
+
+YAML frontmatter, fenced and inline code, embeds, comments, HTML, and the target lines themselves. Text in paragraphs, lists, blockquotes, links, and table cells is counted.
+
+### How is reading time estimated?
+
+From the word count and a reading speed you choose in settings, from 100 to 500 words per minute. The default is 200.
+
+### Can I choose where the statistics appear?
+
+Yes. Show them beside headings, below the note title, in the status bar, or any combination, and pick words, reading time, or characters separately for badges and the status bar.
+
+### Does it work in Reading view?
+
+Yes. Heading and title badges appear in both the editor and Reading view, using the same settings.
+
+### Does it work on mobile?
+
+Yes. It runs on Obsidian for iOS and Android, and an optional sticky meter shows the current target's progress while you scroll.
+
+### Can it count selected text?
+
+Yes. Select any passage and the status bar shows its words, characters, and reading time.
+
+### Will it slow down long notes?
+
+It is built for long manuscripts: counts update after a short pause in typing, and only headings on screen get badges. A 55,000-word note with 480 headings recounts in under 10 milliseconds on a Mac.
+
+### Does it collect data or need the internet?
+
+No. The plugin makes no network requests and keeps everything on your device.
+
+### How is it different from Obsidian's built-in word count?
+
+Obsidian's word count shows totals for the whole note or a selection. Section Writing Stats adds counts for every heading, reading time, and writing targets with progress.
+
+### Which headings are supported?
+
+Headings written with `#` marks, from `#` to `######`. Underline-style (Setext) headings are not supported.
+
+### Is it free?
+
+Yes. It is free and open source under the MIT License. If it helps your writing, you can leave a tip.
+
+## Full documentation (plugin README)
+
+## Section Writing Stats
+
+Live word counts, character counts, reading time, and writing-target progress for every section of an Obsidian note.
+
+Section Writing Stats places a small, continuously updated badge below the inline note title and beside each Markdown heading. It helps you check the length of a chapter, scene, article section, or complete note without interrupting your writing.
+
+[Install from Obsidian Community Plugins](https://community.obsidian.md/plugins/section-meter) · [Visit the website](https://martinowong.github.io/section-writing-stats-site/) · [View the latest release](https://github.com/martinowong/obsidian-section-meter/releases/latest)
+
+### At a glance
+
+- See live statistics beside headings, below the note title, or in the status bar.
+- See heading and whole-note statistics in both the editor and Reading view.
+- Track words, characters, and estimated reading time.
+- Add writing targets (words, characters, or reading time) for the whole note or an individual section.
+- Customize which statistics and labels are displayed.
+- Pause or resume all plugin counting and UI with **Toggle plugin on/off** in the command palette, or hide just the badges or the status bar with **Toggle heading and title stats** and **Toggle status bar stats**.
+
+### How sections are counted
+
+A section begins at a heading and ends immediately before the next heading of the same or a higher level.
+
+Parent headings include their nested subsections. In this example, **Chapter one** includes the introduction and both scenes, while each scene badge counts only that scene:
+
+```md
+# Chapter one
+
+Introduction...
+
+## First scene
+
+Scene text...
+
+## Second scene
+
+More text...
+```
+
+This follows the structure of the Markdown document, so lower-level headings remain part of the section above them.
+
+### Writing targets
+
+The easiest way to manage a target is through the command palette. Place the cursor in the relevant section and run one of these commands:
+
+- **Set or edit whole-note writing target**
+- **Set or edit current-section writing target**
+- **Remove whole-note writing target**
+- **Remove current-section writing target**
+
+**Cycle target progress label** switches target labels between count, percentage, and remaining.
+
+Choose words, characters, or reading time in the target dialog, or type a unit directly, such as `250w`, `1800 chars`, `3m`, or `45s`. Existing targets are filled in automatically when you edit them.
+
+Beside a heading, tap the statistics portion of a badge to open **Copy statistics**. Tap its separate target portion (the target icon, value, or progress bar) for **Edit target** and **Remove target**. These menus work in both the editor and Reading view; you can also right-click or use the keyboard. Ordinary statistics badges never offer target actions. The mobile sticky meter keeps its existing tap behavior.
+
+#### Targets in Markdown
+
+Targets are stored as ordinary, standalone `Target` lines, so they remain visible and portable with the note. Command-palette actions always write the canonical `Target: ...` format. A whole-note target goes before the first heading, after YAML frontmatter if the note has any:
+
+```md
+Target: 1200 words
+
+# My draft
+
+Start writing here...
+```
+
+A section target goes beneath its heading:
+
+```md
+# Introduction
+
+Target: 250 words
+
+Introduction text...
+
+## Background
+
+Target: 1800 characters
+
+Background text...
+```
+
+Supported formats include:
+
+- `Target: 250 words`
+- `target 250w`
+- `Target: 1800 characters`
+- `Target 1,800 chars`
+- `Target: 3 min`
+- `Target: 3m`
+- `Target: 2m 30s`
+- `Target: 45s`
+
+`Target` is case-insensitive. The colon is optional, but a colon or whitespace must separate the marker from the amount, and an explicit unit is required. Targets must occupy the entire line, not appear inside prose, a list, a quote, code, or frontmatter. Counts must be positive whole numbers; commas must group thousands correctly. A duration can be minutes, seconds, or both; when combined with minutes, seconds must be between 0 and 59.
+
+For example, `Target: 500`, `Target500w`, `Target: +300 words`, `Target: 1,00 words`, and `Target: 500 words today` are not targets and remain ordinary note text.
+
+In Live Preview, valid target lines appear as small chips with a target icon, showing the amount, such as **250 words**. Click a chip, or move the cursor onto its line, to see and edit the text as usual. The chip only changes how the line looks: the note always keeps the plain `Target:` line, and Source mode, Reading view, and other apps show it as text. Lines that aren't valid targets, such as `Target: 500`, stay as plain text, so you can tell at a glance whether a target was recognised. You can turn chips off with **Show target lines as chips** in settings.
+
+Target lines are excluded from the statistics. A parent target covers the complete parent section, including nested headings. A nested section can define its own target, which takes priority while the cursor is inside that section.
+
+Progress bars update while you write. They use your theme's accent colour while you work toward a target, turn green with a ✓ when it is reached, and turn orange after the configured overage threshold. In **Remaining** mode the label counts down ("25 words left") and then shows how far past the target you are ("90 words over"). Prefer the original yellow, green, and red bars? Choose **Classic** under **Progress colours** in settings.
+
+### What is counted
+
+Section Writing Stats is designed to measure readable prose rather than Markdown syntax.
+
+It counts text in paragraphs, lists, blockquotes, links, and table cells. It excludes:
+
+- YAML frontmatter
+- Fenced and inline code
+- Embeds
+- Comments and HTML
+- Writing-target lines
+
+Character counts can include or exclude spaces. Reading-time estimates use an adjustable words-per-minute setting.
+
+### Display and settings
+
+Heading and title badges work in both the editor and Reading view, using the same display and counting settings. Writing-target commands and selected-text statistics are available while editing.
+
+Settings are grouped by what you're adjusting, with a live preview at the top that you can pin while you scroll:
+
+- **Badges:** show stats beside headings and below the note title, choose words, reading time, or characters, and hide sections shorter than a word count
+- **Status bar:** whole-note and selected-text stats, with their own choice of words, reading time, or characters
+- **Writing targets:** count, percentage, or remaining labels; theme-accent or classic progress colours; the overage warning; target lines as chips; reached notifications; quick presets; and the mobile sticky meter
+- **Label format:** compact labels, minutes-only reading time, and the separator
+- **Counting:** reading speed and whether character counts include spaces
+
+### Limitations
+
+- Heading badges support `#`-style Markdown headings in both views, not underline-style (Setext) headings.
+- Counts are based on fast Markdown cleanup rather than Obsidian's complete renderer. Content produced by other plugins, rendered transclusions, and complex mathematics may differ slightly from what is visible on screen.
+
+### Installation
+
+Section Writing Stats 1.1.0 and newer requires Obsidian 1.13 or newer.
+
+Install **Section Writing Stats** from **Settings → Community plugins → Browse** in Obsidian, or open its [Community Plugins page](https://community.obsidian.md/plugins/section-meter).
+
+#### Manual installation
+
+Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/martinowong/obsidian-section-meter/releases/latest), then place them in:
+
+```text
+.obsidian/plugins/section-meter/
+```
+
+Restart Obsidian—or reload the installed plugins—and enable **Section Writing Stats** under **Community plugins**.
+
+### Development
+
+```sh
+npm install
+npm test
+npm run lint
+npm run build
+```
+
+For local testing, copy or symlink the repository into `.obsidian/plugins/section-meter`, build the plugin, and enable it in Obsidian.
+
+To install the local build and the canonical regression note into your existing test vault:
+
+```sh
+npm run build:local
+SECTION_METER_TEST_VAULT="/absolute/path/to/test-vault" npm run install:test-vault
+```
+
+The installer replaces `Section Writing Stats test cases.md` with the repository's fixture. Use Live Preview to check title/heading editing, target chips, target inheritance, comment exclusions, and horizontal rules. With two Markdown panes open, verify that the status bar follows the active pane and that tapping the mobile meter edits the displayed target rather than the cursor's section. Disable the plugin and confirm its title badges disappear without changing the note title.
+
+### License
+
+Section Writing Stats is available under the [MIT License](LICENSE).
+
+Created by [Martino Wong](https://github.com/martinowong) with AI tools. This is an independent community plugin and is not affiliated with, endorsed by, or sponsored by Obsidian.

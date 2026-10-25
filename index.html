@@ -39,6 +39,150 @@
         }
       }
     </script>
+    <script type="application/ld+json" id="faq-structured-data">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does Section Writing Stats do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It shows live word counts, character counts, and reading-time estimates beside every Markdown heading, below the note title, and in the status bar, and it tracks writing targets for a whole note or a single section."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What counts as a section?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A heading includes everything beneath it, including nested headings, until the next heading at the same or a higher level. A chapter's count therefore includes all of its scenes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I set a writing target?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Put the cursor in a section and run Set or edit current-section writing target from the command palette, or type a line such as Target: 750 words below the heading yourself. A target above the first heading applies to the whole note."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which target formats work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Words, characters, or reading time: Target: 250 words, target 250w, Target: 1800 chars, Target: 3m, Target: 2m 30s, or Target: 45s. The line must stand on its own and include a unit, and Target is case-insensitive."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a section have its own target inside a larger one?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. A parent heading's target covers all of its subsections, and a nested heading can define its own target, which takes priority while you write in that subsection."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do targets change my notes or lock me in?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. A target is an ordinary line of Markdown that stays in the note and works without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is excluded from the counts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "YAML frontmatter, fenced and inline code, embeds, comments, HTML, and the target lines themselves. Text in paragraphs, lists, blockquotes, links, and table cells is counted."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is reading time estimated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "From the word count and a reading speed you choose in settings, from 100 to 500 words per minute. The default is 200."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I choose where the statistics appear?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Show them beside headings, below the note title, in the status bar, or any combination, and pick words, reading time, or characters separately for badges and the status bar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it work in Reading view?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Heading and title badges appear in both the editor and Reading view, using the same settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it work on mobile?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. It runs on Obsidian for iOS and Android, and an optional sticky meter shows the current target's progress while you scroll."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can it count selected text?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Select any passage and the status bar shows its words, characters, and reading time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will it slow down long notes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is built for long manuscripts: counts update after a short pause in typing, and only headings on screen get badges. A 55,000-word note with 480 headings recounts in under 10 milliseconds on a Mac."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it collect data or need the internet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The plugin makes no network requests and keeps everything on your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is it different from Obsidian's built-in word count?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Obsidian's word count shows totals for the whole note or a selection. Section Writing Stats adds counts for every heading, reading time, and writing targets with progress."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which headings are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Headings written with # marks, from # to ######. Underline-style (Setext) headings are not supported."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. It is free and open source under the MIT License. If it helps your writing, you can leave a tip."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -151,23 +295,79 @@ track of the writing.</code></pre>
         </div>
       </section>
 
-      <section class="faq-section" aria-labelledby="faq-title">
+      <section class="faq-section" id="faq" aria-labelledby="faq-title">
         <div class="faq-heading reveal">
-          <h2 id="faq-title">A few useful answers.</h2>
+          <h2 id="faq-title">Useful answers.</h2>
           <p>Everything stays in your Markdown. The plugin adds live context while you write.</p>
         </div>
         <div class="faq-list reveal">
           <details>
-            <summary>What counts as a section?</summary>
-            <p>A heading includes everything beneath it, including nested headings, until the next heading at the same or a higher level.</p>
+            <summary>What does Section Writing Stats do?</summary>
+            <p>It shows live word counts, character counts, and reading-time estimates beside every Markdown heading, below the note title, and in the status bar, and it tracks writing targets for a whole note or a single section.</p>
           </details>
           <details>
-            <summary>Can I set a target for one part of a note?</summary>
-            <p>Yes. Add a target line below a heading to track that section, or add one to the note for a whole-note target.</p>
+            <summary>What counts as a section?</summary>
+            <p>A heading includes everything beneath it, including nested headings, until the next heading at the same or a higher level. A chapter's count therefore includes all of its scenes.</p>
+          </details>
+          <details>
+            <summary>How do I set a writing target?</summary>
+            <p>Put the cursor in a section and run Set or edit current-section writing target from the command palette, or type a line such as <code>Target: 750 words</code> below the heading yourself. A target above the first heading applies to the whole note.</p>
+          </details>
+          <details>
+            <summary>Which target formats work?</summary>
+            <p>Words, characters, or reading time: <code>Target: 250 words</code>, <code>target 250w</code>, <code>Target: 1800 chars</code>, <code>Target: 3m</code>, <code>Target: 2m 30s</code>, or <code>Target: 45s</code>. The line must stand on its own and include a unit, and <code>Target</code> is case-insensitive.</p>
+          </details>
+          <details>
+            <summary>Can a section have its own target inside a larger one?</summary>
+            <p>Yes. A parent heading's target covers all of its subsections, and a nested heading can define its own target, which takes priority while you write in that subsection.</p>
+          </details>
+          <details>
+            <summary>Do targets change my notes or lock me in?</summary>
+            <p>No. A target is an ordinary line of Markdown that stays in the note and works without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.</p>
+          </details>
+          <details>
+            <summary>What is excluded from the counts?</summary>
+            <p>YAML frontmatter, fenced and inline code, embeds, comments, HTML, and the target lines themselves. Text in paragraphs, lists, blockquotes, links, and table cells is counted.</p>
+          </details>
+          <details>
+            <summary>How is reading time estimated?</summary>
+            <p>From the word count and a reading speed you choose in settings, from 100 to 500 words per minute. The default is 200.</p>
           </details>
           <details>
             <summary>Can I choose where the statistics appear?</summary>
-            <p>Yes. Show them beside headings, beside the note title, in the status bar, or only in the places you want.</p>
+            <p>Yes. Show them beside headings, below the note title, in the status bar, or any combination, and pick words, reading time, or characters separately for badges and the status bar.</p>
+          </details>
+          <details>
+            <summary>Does it work in Reading view?</summary>
+            <p>Yes. Heading and title badges appear in both the editor and Reading view, using the same settings.</p>
+          </details>
+          <details>
+            <summary>Does it work on mobile?</summary>
+            <p>Yes. It runs on Obsidian for iOS and Android, and an optional sticky meter shows the current target's progress while you scroll.</p>
+          </details>
+          <details>
+            <summary>Can it count selected text?</summary>
+            <p>Yes. Select any passage and the status bar shows its words, characters, and reading time.</p>
+          </details>
+          <details>
+            <summary>Will it slow down long notes?</summary>
+            <p>It is built for long manuscripts: counts update after a short pause in typing, and only headings on screen get badges. A 55,000-word note with 480 headings recounts in under 10 milliseconds on a Mac.</p>
+          </details>
+          <details>
+            <summary>Does it collect data or need the internet?</summary>
+            <p>No. The plugin makes no network requests and keeps everything on your device.</p>
+          </details>
+          <details>
+            <summary>How is it different from Obsidian's built-in word count?</summary>
+            <p>Obsidian's word count shows totals for the whole note or a selection. Section Writing Stats adds counts for every heading, reading time, and writing targets with progress.</p>
+          </details>
+          <details>
+            <summary>Which headings are supported?</summary>
+            <p>Headings written with <code>#</code> marks, from <code>#</code> to <code>######</code>. Underline-style (Setext) headings are not supported.</p>
+          </details>
+          <details>
+            <summary>Is it free?</summary>
+            <p>Yes. It is free and open source under the MIT License. If it helps your writing, you can leave a tip.</p>
           </details>
         </div>
       </section>
