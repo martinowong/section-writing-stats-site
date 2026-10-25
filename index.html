@@ -11,15 +11,15 @@
     <meta property="og:title" content="Section Writing Stats for Obsidian - Word Counts & Writing Targets" />
     <meta property="og:description" content="Live word counts, character counts, reading-time estimates, and writing targets for every Markdown heading in Obsidian." />
     <meta property="og:url" content="https://martinowong.github.io/section-writing-stats-site/" />
-    <meta property="og:image" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png" />
-    <meta property="og:image:secure_url" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png" />
+    <meta property="og:image" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png?v=1.5.0" />
+    <meta property="og:image:secure_url" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png?v=1.5.0" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Section Writing Stats for Obsidian, showing live word counts, character counts, reading time, and writing targets." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Section Writing Stats for Obsidian - Word Counts & Writing Targets" />
     <meta name="twitter:description" content="Live word counts, character counts, reading-time estimates, and writing targets for every Markdown heading in Obsidian." />
-    <meta name="twitter:image" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png" />
+    <meta name="twitter:image" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png?v=1.5.0" />
     <meta name="twitter:image:alt" content="Section Writing Stats for Obsidian, showing live word counts, character counts, reading time, and writing targets." />
     <title>Section Writing Stats for Obsidian - Word Counts & Writing Targets</title>
     <link rel="stylesheet" href="landing.css" />
@@ -86,13 +86,18 @@
               <span>#</span><strong>Opening scene</strong>
               <span class="section-meter-badge section-meter-target-badge section-meter-target-start" aria-live="polite">
                 <output class="section-meter-badge-label" id="demo-badge">10 words · 59 characters · 3s</output>
-                <span class="section-meter-target-group"><span class="section-meter-target-caption">Target</span><span class="section-meter-target-label" id="demo-target-count">8%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" id="demo-progress-fill"></i></span></span>
+                <span class="section-meter-target-group" id="demo-target-group"><span class="section-meter-target-caption"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="sr-only">Target</span></span><span class="section-meter-target-label" id="demo-target-count">8%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" id="demo-progress-fill"></i></span></span>
               </span>
             </div>
             <label class="sr-only" for="demo-writing">Try writing a section</label>
-            <textarea id="demo-writing" spellcheck="true">Target: 120 characters
+            <div class="try-editor-body">
+              <textarea id="demo-writing" spellcheck="true">Target: 120 characters
 
 </textarea>
+              <div class="demo-target-line" id="demo-target-line" hidden>
+                <button type="button" class="demo-target-chip" id="demo-target-chip"><span class="demo-target-chip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="demo-target-chip-caption">Target</span><span class="demo-target-chip-value" id="demo-target-chip-value">120 characters</span></button>
+              </div>
+            </div>
             <div class="try-footer">
               <button type="button" id="demo-reset">Reset example</button>
             </div>
@@ -108,7 +113,7 @@
           <article class="feature feature-primary reveal">
             <div>
               <h3>Live stats where you want them</h3>
-              <p>Show live statistics beside Markdown headings, beside the note title, or in the status bar.</p>
+              <p>Show live statistics beside Markdown headings, below the note title, or in the status bar, in both the editor and Reading view.</p>
             </div>
           </article>
           <article class="feature reveal">
@@ -134,7 +139,7 @@
         </div>
         <div class="markdown-sample reveal reveal-late" aria-label="Example Markdown writing target">
           <div class="sample-bar"><span>draft.md</span><span>Markdown</span></div>
-          <div class="sample-heading"><span>#</span><strong>Opening scene</strong><span class="section-meter-badge section-meter-target-badge section-meter-target-mid"><span class="section-meter-badge-label">412 words</span><span class="section-meter-target-group"><span class="section-meter-target-caption">Target</span><span class="section-meter-target-label">55%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" style="width: 55%"></i></span></span></span></div>
+          <div class="sample-heading"><span>#</span><strong>Opening scene</strong><span class="section-meter-badge section-meter-target-badge section-meter-target-mid"><span class="section-meter-badge-label">412 words</span><span class="section-meter-target-group"><span class="section-meter-target-caption"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="sr-only">Target</span></span><span class="section-meter-target-label">55%</span><span class="section-meter-target-progress"><i class="section-meter-target-progress-fill" style="width: 55%"></i></span></span></span></div>
           <pre><code><span class="syntax-target">Target: 750 words</span>
 
 The first paragraph begins here. The target
@@ -226,30 +231,65 @@ track of the writing.</code></pre>
       let demoTypingTimer;
       let isDemoTyping = false;
 
+      const targetGroup = document.querySelector("#demo-target-group");
+      const targetLine = document.querySelector("#demo-target-line");
+      const targetChip = document.querySelector("#demo-target-chip");
+      const targetChipValue = document.querySelector("#demo-target-chip-value");
+      const targetStates = ["section-meter-target-start", "section-meter-target-mid", "section-meter-target-close", "section-meter-target-complete", "section-meter-target-overage"];
+
+      // Mirrors the plugin's syntax: a standalone line such as "Target: 120 characters" or "target 250w".
+      function parseDemoTarget(line) {
+        const match = /^target(?:[ \t]*:[ \t]*|[ \t]+)((?:[1-9]\d{0,2}(?:,\d{3})+)|\d+)[ \t]*(w|words?|chars?|characters?)$/i.exec(line.trim());
+        const value = match ? Number(match[1].replace(/,/g, "")) : 0;
+        return value > 0 ? { value, metric: /^w/i.test(match[2]) ? "words" : "characters" } : null;
+      }
+
+      function firstLineEnd() {
+        const end = writing.value.indexOf("\n");
+        return end === -1 ? writing.value.length : end;
+      }
+
+      // Like Live Preview: the target line shows as a chip unless the cursor is on it.
+      function updateDemoChip() {
+        const target = parseDemoTarget(writing.value.slice(0, firstLineEnd()));
+        const editingTargetLine = document.activeElement === writing && writing.selectionStart <= firstLineEnd();
+        targetLine.hidden = !target || editingTargetLine || writing.scrollTop > 0;
+        if (target) targetChipValue.textContent = `${target.value.toLocaleString("en-US")} ${target.metric}`;
+      }
+
       function updateDemoBadge() {
-        const text = writing.value.replace(/^Target:\s*.*$/gim, "").trim();
+        const lines = writing.value.split("\n");
+        const target = parseDemoTarget(lines[0]);
+        const text = lines.filter((line) => !parseDemoTarget(line)).join("\n").trim();
         const words = text ? text.split(/\s+/).length : 0;
         const characters = text.length;
         const seconds = Math.max(0, Math.round((words / 220) * 60));
         badge.textContent = `${words} ${words === 1 ? "word" : "words"} · ${characters} characters · ${seconds}s`;
-        const percent = Math.min(Math.round((characters / 120) * 100), 100);
-        document.querySelector("#demo-target-count").textContent = `${percent}%`;
-        document.querySelector("#demo-progress-fill").style.width = `${percent}%`;
-        const targetState = characters > 120
-          ? "section-meter-target-overage"
-          : percent >= 100
-            ? "section-meter-target-complete"
-            : percent >= 80
-              ? "section-meter-target-close"
-              : percent >= 50
-                ? "section-meter-target-mid"
-                : "section-meter-target-start";
-        const targetStates = ["section-meter-target-start", "section-meter-target-mid", "section-meter-target-close", "section-meter-target-complete", "section-meter-target-overage"];
         targetBadge.classList.remove(...targetStates);
         targetProgress.classList.remove(...targetStates);
-        targetBadge.classList.add(targetState);
-        targetProgress.classList.add(targetState);
+        targetGroup.hidden = !target;
+        if (target) {
+          const current = target.metric === "words" ? words : characters;
+          const percent = Math.round((current / target.value) * 100);
+          document.querySelector("#demo-target-count").textContent = `${percent}%`;
+          document.querySelector("#demo-progress-fill").style.width = `${Math.min(percent, 100)}%`;
+          const targetState = current >= target.value * 1.25
+            ? "section-meter-target-overage"
+            : current >= target.value
+              ? "section-meter-target-complete"
+              : "section-meter-target-start";
+          targetBadge.classList.add(targetState);
+          targetProgress.classList.add(targetState);
+        }
+        updateDemoChip();
       }
+
+      targetChip.addEventListener("click", () => {
+        writing.focus();
+        writing.setSelectionRange(firstLineEnd(), firstLineEnd());
+        updateDemoChip();
+      });
+      ["focus", "blur", "click", "keyup", "select", "scroll"].forEach((type) => writing.addEventListener(type, updateDemoChip));
 
       const playDemoTypewriter = () => {
         window.clearTimeout(demoTypingTimer);
