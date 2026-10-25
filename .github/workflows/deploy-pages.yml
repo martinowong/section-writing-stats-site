@@ -3,6 +3,9 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # Refresh the download count daily without committing.
+    - cron: "17 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -23,6 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Record the download count
+        # The public statistics file covers every community plugin (several MB),
+        # so publish just this plugin's count. Keep the committed copy on failure.
+        run: |
+          downloads=$(curl -fsSL https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugin-stats.json \
+            | jq '.["section-meter"].downloads // empty') || true
+          if [ -n "$downloads" ]; then printf '{"downloads":%s}\n' "$downloads" > downloads.json; fi
+          cat downloads.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

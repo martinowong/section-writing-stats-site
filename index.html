@@ -23,7 +23,6 @@
     <meta name="twitter:image:alt" content="Section Writing Stats for Obsidian, showing live word counts, character counts, reading time, and writing targets." />
     <title>Section Writing Stats for Obsidian - Word Counts & Writing Targets</title>
     <link rel="stylesheet" href="landing.css" />
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -60,7 +59,10 @@
         <div class="hero-title reveal">
           <h1 class="hero-shout" aria-label="How much more do you need to write?"><span class="type-row" aria-hidden="true"><span class="type-word type-word-1">HOW</span></span><span class="type-row type-row-much" aria-hidden="true"><span class="type-word type-word-2 type-word-much">MUCH</span><span class="type-word type-word-3">MORE</span></span><span class="type-row" aria-hidden="true"><span class="type-word type-word-4">DO</span><span class="type-word type-word-5">YOU</span><span class="type-word type-word-6">NEED</span><span class="type-word type-word-7">TO</span></span><span class="type-row" aria-hidden="true"><span class="type-word type-word-write"><span class="write-line">WRIIIIIIIIIII</span><span class="write-line">IIIIIIIIITE??</span></span></span></h1>
           <figure class="hero-screenshot">
-            <img src="images/section-writing-stats-obsidian.png" width="2300" height="1924" fetchpriority="high" alt="Section Writing Stats showing heading badges, note statistics, and writing-target progress in Obsidian" />
+            <picture>
+              <source srcset="images/section-writing-stats-obsidian.webp" type="image/webp" />
+              <img src="images/section-writing-stats-obsidian.png" width="2300" height="1924" fetchpriority="high" alt="Section Writing Stats showing heading badges, note statistics, and writing-target progress in Obsidian" />
+            </picture>
           </figure>
         </div>
         <div class="hero-copy reveal">
@@ -73,7 +75,7 @@
             <a class="button" href="https://community.obsidian.md/plugins/section-meter">Install in Obsidian</a>
             <a class="button button-repo" href="https://github.com/martinowong/obsidian-section-meter">View on GitHub</a>
           </div>
-          <p class="download-count" aria-live="polite">Join other <strong><span id="download-count" data-downloads="0" data-fallback-downloads="437">0</span>+</strong> writers that have downloaded Section Writing Stats.</p>
+          <p class="download-count" aria-live="polite">Join other <strong><span id="download-count" data-downloads="0" data-fallback-downloads="3099">0</span>+</strong> writers that have downloaded Section Writing Stats.</p>
         </div>
         <div class="editor-stage reveal reveal-late">
           <p class="try-prompt">Try typing to see it work.</p>
@@ -182,6 +184,7 @@ track of the writing.</code></pre>
                 buy-button-id="buy_btn_1U2U9LBZ7E4J3C2PV20x16Y0"
                 publishable-key="pk_live_51QSmmABZ7E4J3C2PZJ722tiUnINsko8iq7mGpmrBPlGW8NEKcEDpGhbU9Q8T30tfKAvzZQvdubkgQbM4pyCPtM6d00pWv3S7lW"
               ></stripe-buy-button>
+              <a class="support-tip-fallback" href="https://buy.stripe.com/fZu28qbuq96G63R759gYU00">Open the tip page</a>
             </div>
           </div>
           <figure class="support-portrait">
@@ -330,7 +333,7 @@ track of the writing.</code></pre>
       demoTypingTimer = window.setTimeout(playDemoTypewriter, 900);
 
       const downloadCount = document.querySelector("#download-count");
-      const downloadCountUrl = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugin-stats.json";
+      const downloadCountUrl = "downloads.json";
       const formatDownloads = (value) => new Intl.NumberFormat().format(value);
 
       function renderDownloadCount(downloads, animate) {
@@ -379,7 +382,7 @@ track of the writing.</code></pre>
         fetch(downloadCountUrl)
           .then((response) => response.ok ? response.json() : Promise.reject(new Error("Download statistics are unavailable.")))
           .then((statistics) => {
-            const downloads = statistics?.["section-meter"]?.downloads;
+            const downloads = statistics?.downloads;
             if (!Number.isFinite(downloads)) return;
             currentDownloads = downloads;
             if (hasAnimated) renderDownloadCount(downloads, false);
@@ -387,6 +390,37 @@ track of the writing.</code></pre>
           .catch(() => {
             // The visible fallback keeps the page useful if the public statistics file is unavailable.
           });
+      }
+
+      // Stripe's script only matters near the tip jar, so load it on approach.
+      // If it can't load (offline, blocked), show a plain link instead.
+      const tipJar = document.querySelector(".support-tip");
+      if (tipJar) {
+        let stripeRequested = false;
+        const showTipLink = () => tipJar.classList.add("tip-jar-unavailable");
+        const loadStripe = () => {
+          if (stripeRequested) return;
+          stripeRequested = true;
+          const script = document.createElement("script");
+          script.src = "https://js.stripe.com/v3/buy-button.js";
+          script.async = true;
+          script.addEventListener("error", showTipLink);
+          document.head.append(script);
+          window.setTimeout(() => {
+            if (!customElements.get("stripe-buy-button")) showTipLink();
+          }, 8000);
+        };
+        if ("IntersectionObserver" in window) {
+          const tipObserver = new IntersectionObserver((entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            loadStripe();
+            tipObserver.disconnect();
+          }, { rootMargin: "800px 0px" });
+          tipObserver.observe(tipJar);
+        } else {
+          loadStripe();
+        }
+        document.querySelectorAll('a[href="#support"]').forEach((link) => link.addEventListener("click", loadStripe));
       }
 
       const supportLayout = document.querySelector(".support-layout");
