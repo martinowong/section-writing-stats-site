@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="site.css" />
     <link rel="stylesheet" href="plugin.css" />
     <link rel="stylesheet" href="prototype.css" />
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -87,7 +86,7 @@
       </section>
 
       <ul class="p-facts" aria-label="At a glance">
-        <li><strong><span id="download-count" data-downloads="0" data-fallback-downloads="3000">3,000</span>+</strong> downloads</li>
+        <li><strong><span id="download-count" data-downloads="0" data-fallback-downloads="3099">3,099</span>+</strong> downloads</li>
         <li>Free and open source</li>
         <li>Works on desktop and mobile</li>
         <li>Your notes stay plain Markdown</li>
@@ -119,7 +118,10 @@
           </article>
         </div>
         <figure class="p-features-shot hero-screenshot reveal">
-          <img src="../images/section-writing-stats-obsidian.png" width="2300" height="1924" loading="lazy" alt="Section Writing Stats in Obsidian, with heading badges, target chips, and the status bar" />
+          <picture>
+            <source srcset="../images/section-writing-stats-obsidian.webp" type="image/webp" />
+            <img src="../images/section-writing-stats-obsidian.png" width="2300" height="1924" loading="lazy" alt="Section Writing Stats in Obsidian, with heading badges, target chips, and the status bar" />
+          </picture>
         </figure>
         </div>
       </section>
@@ -186,6 +188,7 @@
                 buy-button-id="buy_btn_1U2U9LBZ7E4J3C2PV20x16Y0"
                 publishable-key="pk_live_51QSmmABZ7E4J3C2PZJ722tiUnINsko8iq7mGpmrBPlGW8NEKcEDpGhbU9Q8T30tfKAvzZQvdubkgQbM4pyCPtM6d00pWv3S7lW"
               ></stripe-buy-button>
+              <a class="support-tip-fallback" href="https://buy.stripe.com/fZu28qbuq96G63R759gYU00">Open the tip page</a>
             </div>
           </div>
           <figure class="support-portrait">
@@ -293,7 +296,7 @@
         if (target) {
           const progress = progressFor(target, target.metric === "words" ? words : characters, "percentage");
           targetCount.textContent = progress.label;
-          progressFill.style.width = `${Math.min(progress.percent, 100)}%`;
+          progressFill.style.setProperty("--section-meter-progress", `${Math.min(progress.percent, 100)}%`);
           applyProgress([targetBadge, targetCount, progressFill.parentElement], progress);
           const separator = Object.assign(document.createElement("span"), { className: "section-meter-status-bar-separator", textContent: "|" });
           const label = Object.assign(document.createElement("span"), { className: `section-meter-target-label section-meter-status-bar-target-label ${progress.state}`, textContent: `Target: ${progress.label}` });
@@ -366,7 +369,7 @@
         wordsOutput.textContent = words.toLocaleString("en-US");
         sampleLabel.textContent = plural(words, "word");
         sampleCount.textContent = progress.label;
-        sampleFill.style.width = `${Math.min(progress.percent, 100)}%`;
+        sampleFill.style.setProperty("--section-meter-progress", `${Math.min(progress.percent, 100)}%`);
         applyProgress([sampleBadge, sampleCount, sampleFill.parentElement], progress);
         if (checked("target-view") === "source") {
           sampleLine.replaceChildren(Object.assign(document.createElement("code"), { textContent: "Target: 750 words" }));
@@ -385,7 +388,7 @@
 
 
       const downloadCount = document.querySelector("#download-count");
-      const downloadCountUrl = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugin-stats.json";
+      const downloadCountUrl = "../downloads.json";
       const formatDownloads = (value) => new Intl.NumberFormat().format(value);
 
       function renderDownloadCount(downloads, animate) {
@@ -434,7 +437,7 @@
         fetch(downloadCountUrl)
           .then((response) => response.ok ? response.json() : Promise.reject(new Error("Download statistics are unavailable.")))
           .then((statistics) => {
-            const downloads = statistics?.["section-meter"]?.downloads;
+            const downloads = statistics?.downloads;
             if (!Number.isFinite(downloads)) return;
             currentDownloads = downloads;
             if (hasAnimated) renderDownloadCount(downloads, false);
@@ -442,6 +445,37 @@
           .catch(() => {
             // The visible fallback keeps the page useful if the public statistics file is unavailable.
           });
+      }
+
+      // Stripe's script only matters near the tip jar, so load it on approach.
+      // If it can't load (offline, blocked), show a plain link instead.
+      const tipJar = document.querySelector(".support-tip");
+      if (tipJar) {
+        let stripeRequested = false;
+        const showTipLink = () => tipJar.classList.add("tip-jar-unavailable");
+        const loadStripe = () => {
+          if (stripeRequested) return;
+          stripeRequested = true;
+          const script = document.createElement("script");
+          script.src = "https://js.stripe.com/v3/buy-button.js";
+          script.async = true;
+          script.addEventListener("error", showTipLink);
+          document.head.append(script);
+          window.setTimeout(() => {
+            if (!customElements.get("stripe-buy-button")) showTipLink();
+          }, 8000);
+        };
+        if ("IntersectionObserver" in window) {
+          const tipObserver = new IntersectionObserver((entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            loadStripe();
+            tipObserver.disconnect();
+          }, { rootMargin: "800px 0px" });
+          tipObserver.observe(tipJar);
+        } else {
+          loadStripe();
+        }
+        document.querySelectorAll('a[href="#support"]').forEach((link) => link.addEventListener("click", loadStripe));
       }
 
       const supportLayout = document.querySelector(".support-layout");

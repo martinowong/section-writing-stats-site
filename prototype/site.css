@@ -84,7 +84,7 @@ nav a:hover, footer a:hover, .text-link:hover { color: var(--accent-soft); }
 .hero-title { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr); gap: clamp(40px, 5vw, 76px); align-items: center; perspective: 1400px; }
 .hero-screenshot { --screen-x: 0px; --screen-y: 0px; --screen-rx: 0deg; --screen-ry: 0deg; width: 100%; margin: 0; filter: drop-shadow(0 28px 32px rgb(0 0 0 / 0.3)); transform: translateX(clamp(0px, 2vw, 32px)) translate3d(var(--screen-x), var(--screen-y), 0) rotateY(calc(-14deg + var(--screen-ry))) rotateX(calc(2.5deg + var(--screen-rx))) rotateZ(-1deg); transform-origin: left center; transition: transform 220ms cubic-bezier(.16, 1, .3, 1), filter 220ms cubic-bezier(.16, 1, .3, 1); }
 .hero-screenshot:hover { filter: drop-shadow(0 36px 38px rgb(0 0 0 / 0.36)); }
-.hero-screenshot img { width: 100%; height: auto; display: block; }
+.hero-screenshot picture, .hero-screenshot img { width: 100%; height: auto; display: block; }
 
 .document-map { position: absolute; z-index: -1; inset: -32px -70px; overflow: hidden; pointer-events: none; }
 .map-line { position: absolute; height: 2px; transform-origin: left center; border-top: 2px dashed rgb(184 140 255 / 0.32); }
@@ -270,3 +270,4 @@ footer > span:first-child { color: var(--muted); font-weight: 650; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (prefers-reduced-motion: reduce) { .section-meter-target-progress-fill { transition: none; } }
+.support-tip-fallback { display: none; margin: 6px 4px 2px; color: #211633; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }.tip-jar-unavailable stripe-buy-button { display: none; }.tip-jar-unavailable .support-tip-fallback { display: inline-block; }
