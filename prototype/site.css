@@ -272,4 +272,8 @@ footer > span:first-child { color: var(--muted); font-weight: 650; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (prefers-reduced-motion: reduce) { .section-meter-target-progress-fill { transition: none; } }
+/* The tip box holds the Stripe button's size from the start and fades it in when drawn. */
+.support-tip stripe-buy-button { display: block; min-height: 197px; opacity: 0; transition: opacity 300ms ease; }
+.tip-jar-ready stripe-buy-button { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .support-tip stripe-buy-button { transition: none; } }
 .support-tip-fallback { display: none; margin: 6px 4px 2px; color: #211633; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }.tip-jar-unavailable stripe-buy-button { display: none; }.tip-jar-unavailable .support-tip-fallback { display: inline-block; }
