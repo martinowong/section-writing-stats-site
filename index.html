@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://martinowong.github.io/section-writing-stats-site/images/section-writing-stats-x-card.png?v=1.5.0" />
     <meta name="twitter:image:alt" content="Section Writing Stats for Obsidian, showing live word counts, character counts, reading time, and writing targets." />
     <title>Section Writing Stats for Obsidian - Word Counts & Writing Targets</title>
-    <link rel="stylesheet" href="landing.css" />
+    <link rel="stylesheet" href="landing.css?v=2026-10-26" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -591,12 +591,27 @@ track of the writing.</code></pre>
           });
       }
 
-      // Stripe's script only matters near the tip jar, so load it on approach.
-      // If it can't load (offline, blocked), show a plain link instead.
+      // Stripe's script loads quietly after the page, or sooner on approach. The
+      // tip box keeps its final size meanwhile and fades the button in once drawn,
+      // so nothing jumps. If Stripe can't load (offline, blocked), show a plain link.
       const tipJar = document.querySelector(".support-tip");
       if (tipJar) {
         let stripeRequested = false;
-        const showTipLink = () => tipJar.classList.add("tip-jar-unavailable");
+        const showTipLink = () => tipJar.classList.add("tip-jar-unavailable", "tip-jar-ready");
+        const revealWhenDrawn = async () => {
+          await customElements.whenDefined("stripe-buy-button");
+          const button = tipJar.querySelector("stripe-buy-button");
+          for (let attempt = 0; attempt < 50; attempt++) {
+            const frame = button?.shadowRoot?.querySelector("iframe");
+            if (frame) {
+              frame.addEventListener("load", () => tipJar.classList.add("tip-jar-ready"), { once: true });
+              window.setTimeout(() => tipJar.classList.add("tip-jar-ready"), 2500);
+              return;
+            }
+            await new Promise((resolve) => window.setTimeout(resolve, 100));
+          }
+          tipJar.classList.add("tip-jar-ready");
+        };
         const loadStripe = () => {
           if (stripeRequested) return;
           stripeRequested = true;
@@ -605,16 +620,18 @@ track of the writing.</code></pre>
           script.async = true;
           script.addEventListener("error", showTipLink);
           document.head.append(script);
+          revealWhenDrawn();
           window.setTimeout(() => {
             if (!customElements.get("stripe-buy-button")) showTipLink();
           }, 8000);
         };
+        window.addEventListener("load", () => window.setTimeout(loadStripe, 2000), { once: true });
         if ("IntersectionObserver" in window) {
           const tipObserver = new IntersectionObserver((entries) => {
             if (!entries.some((entry) => entry.isIntersecting)) return;
             loadStripe();
             tipObserver.disconnect();
-          }, { rootMargin: "800px 0px" });
+          }, { rootMargin: "1600px 0px" });
           tipObserver.observe(tipJar);
         } else {
           loadStripe();
