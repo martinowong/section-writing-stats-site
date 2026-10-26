@@ -46,9 +46,9 @@ Words, characters, or reading time: `Target: 250 words`, `target 250w`, `Target:
 
 Yes. A parent heading's target covers all of its subsections, and a nested heading can define its own target, which takes priority while you write in that subsection.
 
-### Do targets change my notes or lock me in?
+### Are targets managed in a separate file?
 
-No. A target is an ordinary line of Markdown that stays in the note and works without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.
+No. A target is an ordinary line in the note itself, such as `Target: 750 words`, so it travels with the note and stays readable without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.
 
 ### What is excluded from the counts?
 
