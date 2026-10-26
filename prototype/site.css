@@ -159,7 +159,7 @@ pre { overflow: auto; margin: 0; padding: 28px 30px 31px; font-family: ui-monosp
 .syntax-heading { color: #f1e5ff; font-weight: 700; }.syntax-target { color: var(--accent-soft); }
 
 .faq-section { width: min(100% - 48px, 1280px); margin: 0 auto; display: grid; grid-template-columns: minmax(280px, 0.78fr) minmax(420px, 1.22fr); gap: clamp(48px, 10vw, 150px); padding: 0 0 132px; }
-.faq-heading h2 { margin: 0 0 20px; font-size: clamp(2.7rem, 4.4vw, 4.7rem); font-weight: 650; letter-spacing: -0.065em; line-height: 0.96; }
+.faq-heading h2 { margin: 0 0 20px; font-size: clamp(4.5rem, 9vw, 9rem); font-weight: 650; letter-spacing: -0.065em; line-height: 0.88; }
 .faq-heading p { max-width: 360px; margin: 0; color: var(--muted); font-size: 1.03rem; line-height: 1.55; }
 .faq-list { border-top: 1px solid var(--line); }
 .faq-list details { border-bottom: 1px solid var(--line); }
