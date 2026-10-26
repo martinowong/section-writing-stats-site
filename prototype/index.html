@@ -274,12 +274,8 @@
         <div class="p-targets-copy target-copy reveal">
           <h2>Set a writing target.</h2>
           <p>Add a <code>Target: 750 words</code> line below any heading. It stays plain Markdown, and in Live Preview it turns into a tidy chip.</p>
-          <p class="p-controls-hint">Try the options below. The example on the right changes the way your note would.</p>
+          <p class="p-controls-hint">Try the options below. The badge on the right changes the way it would in your note.</p>
           <div class="p-controls">
-            <fieldset class="p-segmented"><legend>View</legend><div>
-              <label><input type="radio" name="target-view" value="live" checked><span>Live Preview</span></label>
-              <label><input type="radio" name="target-view" value="source"><span>Source</span></label>
-            </div></fieldset>
             <fieldset class="p-segmented"><legend>Progress label</legend><div>
               <label><input type="radio" name="target-label" value="count" checked><span>Count</span></label>
               <label><input type="radio" name="target-label" value="percentage"><span>Percentage</span></label>
@@ -294,12 +290,14 @@
           </div>
           <a class="text-link" href="https://github.com/martinowong/obsidian-section-meter#writing-targets">Read the target guide <span aria-hidden="true">→</span></a>
         </div>
-        <figure class="obsidian-frame p-target-demo reveal reveal-late" aria-label="Example section with a 750-word target">
-          <div class="of-titlebar" aria-hidden="true"><span class="of-lights"><i></i><i></i><i></i></span><span class="of-tab">draft</span></div>
-          <div class="of-body">
+        <figure class="obsidian-frame p-target-zoom reveal reveal-late" aria-label="Close-up of a heading badge tracking a 750-word target">
+          <div class="p-zoom-body">
+            <p class="p-zoom-context" aria-hidden="true">…and the rain had not stopped for three days, which suited everyone except the pigeon.</p>
             <h2 class="of-heading">Opening scene <span class="section-meter-badge section-meter-target-badge section-meter-target-start" id="sample-target-badge"><span class="section-meter-badge-label" id="sample-badge-label">412 words</span><span class="section-meter-target-group"><span class="section-meter-target-caption"><svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="sr-only">Target</span></span><span class="section-meter-target-label section-meter-target-start" id="sample-target-count">0%</span><span class="section-meter-target-progress section-meter-target-start"><span class="section-meter-target-progress-fill" id="sample-progress-fill"></span></span></span></span></h2>
-            <div class="p-target-line" id="sample-target-line"><button type="button" class="section-meter-target-chip" id="sample-chip-value-chip"><span class="section-meter-target-chip-icon"><svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="section-meter-target-chip-caption">Target</span><span class="section-meter-target-chip-value" id="sample-chip-value">750 words</span></button></div>
-            <p>The first paragraph begins here. The target line stays in the note, while the badge keeps track of the writing.</p>
+            <div class="p-zoom-context" aria-hidden="true">
+              <span class="section-meter-target-chip"><span class="section-meter-target-chip-icon"><svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="section-meter-target-chip-caption">Target</span><span class="section-meter-target-chip-value">750 words</span></span>
+              <p>The first paragraph begins here. The target line stays in the note, while the badge keeps track of the writing.</p>
+            </div>
           </div>
         </figure>
       </section>
@@ -556,14 +554,12 @@
       updateDemoBadge();
       demoTypingTimer = window.setTimeout(playDemoTypewriter, 700);
 
-      // Targets section: view, label style, and words written all update one example.
+      // Targets section: the label style and how far along the section is update one badge.
       const sampleTarget = { value: 750, metric: "words" };
       const sampleBadge = document.querySelector("#sample-target-badge");
       const sampleLabel = document.querySelector("#sample-badge-label");
       const sampleCount = document.querySelector("#sample-target-count");
       const sampleFill = document.querySelector("#sample-progress-fill");
-      const sampleLine = document.querySelector("#sample-target-line");
-      const sampleChip = sampleLine.innerHTML;
       const checked = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
 
       function updateTargetSample() {
@@ -573,20 +569,10 @@
         sampleCount.textContent = progress.label;
         sampleFill.style.setProperty("--section-meter-progress", `${Math.min(progress.percent, 100)}%`);
         applyProgress([sampleBadge, sampleCount, sampleFill.parentElement], progress);
-        if (checked("target-view") === "source") {
-          sampleLine.replaceChildren(Object.assign(document.createElement("code"), { textContent: "Target: 750 words" }));
-        } else if (!sampleLine.querySelector(".section-meter-target-chip")) {
-          sampleLine.innerHTML = sampleChip;
-        }
       }
 
-      document.querySelectorAll('input[name="target-view"], input[name="target-label"], input[name="target-progress"]').forEach((input) => input.addEventListener("change", updateTargetSample));
-      sampleLine.addEventListener("click", (event) => {
-        if (!event.target.closest(".section-meter-target-chip")) return;
-        document.querySelector('input[name="target-view"][value="source"]').click();
-      });
+      document.querySelectorAll('input[name="target-label"], input[name="target-progress"]').forEach((input) => input.addEventListener("change", updateTargetSample));
       updateTargetSample();
-
 
       const downloadCount = document.querySelector("#download-count");
       const downloadCountUrl = "../downloads.json";
