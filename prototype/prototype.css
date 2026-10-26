@@ -262,8 +262,19 @@ p.p-zoom-context { margin: 0; color: var(--text-normal); font-size: 1.3rem; line
    fixed position relative to the phone instead of the page. */
 .p-phone-stage { align-items: center; justify-content: flex-end; overflow: hidden; border-radius: 14px; background: rgb(255 255 255 / 0.04); box-shadow: inset 0 0 0 1px var(--line); }
 .p-phone { --background-primary-alt: #f1f1f1; --mobile-toolbar-height: 44px; width: 210px; height: 280px; margin-top: 20px; border-radius: 26px 26px 0 0; transform: translateZ(0); box-shadow: 0 0 0 6px #2a2333, 0 24px 56px rgb(6 2 14 / 0.5); }
-.p-phone { --header-height: 6px; overflow: hidden; }
-.p-phone-scroll { padding: 22px 16px 0; font-size: 12.5px; line-height: 1.6; transition: transform 1.6s cubic-bezier(.45, .05, .25, 1); }
+/* Minimal phone chrome: iOS status bar and Obsidian's mobile header, which the note
+   scrolls under. The plugin places a top meter below safe area + header height. */
+.p-phone { --safe-area-inset-top: 24px; --header-height: 30px; overflow: hidden; }
+.p-phone-status, .p-phone-header { position: absolute; right: 0; left: 0; z-index: 2; display: flex; align-items: center; background: var(--background-primary); color: var(--text-normal); }
+.p-phone-status { top: 0; height: 24px; justify-content: space-between; padding: 0 16px 0 20px; font-size: 10.5px; font-weight: 650; letter-spacing: 0.01em; }
+.p-phone-island { position: absolute; top: 5px; left: 50%; width: 52px; height: 15px; margin-left: -26px; border-radius: 999px; background: #111; }
+.p-phone-icons { display: inline-flex; align-items: center; gap: 4px; }
+.p-phone-icons svg { height: 8px; width: auto; fill: currentColor; }
+.p-phone-icons svg:last-child { height: 9px; }
+.p-phone-header { top: 24px; height: 30px; gap: 8px; padding: 0 10px; border-bottom: 1px solid var(--background-modifier-border); color: var(--text-muted); font-size: 11.5px; font-weight: 600; }
+.p-phone-header span { flex: 1; color: var(--text-normal); text-align: center; }
+.p-phone-header svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.p-phone-scroll { padding: 68px 16px 0; font-size: 12.5px; line-height: 1.6; transition: transform 1.6s cubic-bezier(.45, .05, .25, 1); }
 .p-phone-scroll .of-heading { margin: 0 0 8px; font-size: 1.15rem; }
 .p-phone-scroll .of-heading:not(:first-child) { margin-top: 18px; }
 .p-phone-scroll p { margin: 0 0 8px; }

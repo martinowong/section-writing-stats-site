@@ -303,6 +303,8 @@
           <article class="p-place reveal">
             <figure class="p-place-visual p-phone-stage" aria-hidden="true">
               <div class="obsidian-frame p-phone is-mobile">
+                <div class="p-phone-status"><span>9:41</span><i class="p-phone-island"></i><span class="p-phone-icons"><svg viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg viewBox="0 0 15 11"><path d="M7.5 2.2c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 7.5.6 9.6 9.6 0 0 0 .7 3.3l1.1 1.1a8.1 8.1 0 0 1 5.7-2.2Zm0 3.1c1.4 0 2.6.5 3.6 1.4l1.1-1.1a6.6 6.6 0 0 0-9.4 0l1.1 1.1c1-.9 2.2-1.4 3.6-1.4Zm0 3.2c.6 0 1.1.2 1.5.6L7.5 10.6 6 9.1c.4-.4.9-.6 1.5-.6Z"/></svg><svg viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.6"/><rect x="22.5" y="4" width="1.6" height="4" rx=".8" opacity=".45"/></svg></span></div>
+                <div class="p-phone-header"><svg viewBox="0 0 24 24" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg><span>Scene notes</span><svg viewBox="0 0 24 24" stroke-width="2.2"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></div>
                 <div class="p-phone-scroll">
                   <h4 class="of-heading">Opening scene</h4>
                   <p>The rain had not stopped for three days. The pigeon on the windowsill had appointed itself editor-in-chief.</p>
@@ -361,8 +363,7 @@
 
       <section class="faq-section" id="faq" aria-labelledby="faq-title">
         <div class="faq-heading reveal">
-          <h2 id="faq-title">Useful answers.</h2>
-          <p>Everything stays in your Markdown. The plugin adds live context while you write.</p>
+          <h2 id="faq-title">Questions writers ask.</h2>
         </div>
         <div class="faq-list reveal">
           <details>
@@ -386,8 +387,8 @@
             <p>Yes. A parent heading's target covers all of its subsections, and a nested heading can define its own target, which takes priority while you write in that subsection.</p>
           </details>
           <details>
-            <summary>Do targets change my notes or lock me in?</summary>
-            <p>No. A target is an ordinary line of Markdown that stays in the note and works without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.</p>
+            <summary>Are targets managed in a separate file?</summary>
+            <p>No. A target is an ordinary line in the note itself, such as <code>Target: 750 words</code>, so it travels with the note and stays readable without the plugin. In Live Preview it shows as a small chip; click it to edit the text, or turn chips off in settings.</p>
           </details>
           <details>
             <summary>What is excluded from the counts?</summary>
@@ -732,7 +733,9 @@
           meter.dataset.position = position;
           meter.classList.remove("is-touched");
         };
-        const letterOffset = () => phone.querySelector('[data-section="letter"]').offsetTop - 18;
+        // Scroll so the next heading lands just below the phone's header.
+        const letterOffset = () => phone.querySelector('[data-section="letter"]').offsetTop
+          - phone.querySelector(".p-phone-header").getBoundingClientRect().bottom + phone.getBoundingClientRect().top - 10;
         const ready = onScreen(phone);
         (async () => {
           for (;;) {
