@@ -228,15 +228,52 @@
 p.p-zoom-context { margin: 0; color: var(--text-normal); font-size: 1.3rem; line-height: 1.7; }
 .p-zoom-context .section-meter-target-chip { margin-bottom: 14px; font-size: 1rem; }
 
+/* Everywhere you write: three small, real renderings of the plugin's UI. */
+.p-everywhere { width: min(100% - 48px, 1280px); margin: 0 auto; padding: 0 0 140px; }
+.p-everywhere-heading { max-width: 640px; margin-bottom: 48px; }
+.p-everywhere-heading h2 { margin: 0 0 16px; font-size: clamp(2.7rem, 4.4vw, 4.7rem); font-weight: 650; letter-spacing: -0.065em; line-height: 0.96; }
+.p-everywhere-heading p { margin: 0; color: var(--muted); font-size: 1.08rem; }
+.p-everywhere-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); }
+.p-place h3 { margin: 26px 0 8px; font-size: 1.15rem; letter-spacing: -0.02em; }
+.p-place > p { margin: 0; color: var(--muted); line-height: 1.55; }
+.p-place-visual { height: 300px; margin: 0; display: flex; flex-direction: column; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 24px 56px rgb(6 2 14 / 0.45); }
+.p-place-text { flex: 1; padding: 24px 22px; color: var(--text-normal); font-size: 0.98rem; line-height: 1.65; }
+.p-place-text p { margin: 0; }
+.p-place-text mark { border-radius: 2px; background: rgb(138 92 245 / 0.22); color: inherit; }
+.p-statusbar { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; padding: 8px 12px; border-top: 1px solid var(--background-modifier-border); background: var(--background-secondary); color: var(--text-muted); font-size: 11.5px; }
+.p-statusbar .section-meter-status-bar-part { display: inline-flex; align-items: center; gap: 0.4em; white-space: nowrap; }
+.p-statusbar .section-meter-target-progress { inline-size: 2.75em; }
+.p-reading-mode { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; padding: 3px 9px 3px 7px; border-radius: 999px; background: var(--background-modifier-hover); color: var(--text-muted); font-size: 12px; }
+.p-reading-mode svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.p-place .of-heading { margin-bottom: 12px; font-size: 1.3rem; }
+.p-place .of-heading .section-meter-badge { font-size: 0.56em; }
+
+/* The phone gets the plugin's real mobile meter. Its transform makes the meter's
+   fixed position relative to the phone instead of the page. */
+.p-phone-stage { align-items: center; justify-content: flex-end; overflow: hidden; border-radius: 14px; background: rgb(255 255 255 / 0.04); box-shadow: inset 0 0 0 1px var(--line); }
+.p-phone { --background-primary-alt: #f1f1f1; --mobile-toolbar-height: 44px; width: 210px; height: 280px; margin-top: 20px; border-radius: 26px 26px 0 0; transform: translateZ(0); box-shadow: 0 0 0 6px #2a2333, 0 24px 56px rgb(6 2 14 / 0.5); }
+.p-phone-note { padding: 22px 16px 0; font-size: 12.5px; line-height: 1.6; }
+.p-phone-note .of-heading { margin: 0 0 8px; font-size: 1.15rem; }
+.p-phone-note p { margin: 0 0 8px; }
+.p-phone .section-meter-mobile-current-section { inset-inline: 8px; font-size: 11px; }
+.p-phone-toolbar { position: absolute; right: 0; bottom: 0; left: 0; height: 44px; display: flex; align-items: center; justify-content: space-around; border-top: 1px solid var(--background-modifier-border); background: var(--background-secondary); }
+.p-phone-toolbar i { width: 16px; height: 16px; border-radius: 4px; background: #c9c9c9; }
+
+.p-footer { flex-wrap: wrap; padding: 24px 0; }
+.p-footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.p-footer-links a, .p-footer a { color: var(--muted); }
+.p-footer-links a:hover, .p-footer a:hover { color: var(--accent-soft); }
+
 @media (max-width: 960px) {
-  .p-hero, .p-targets, .p-features-layout { grid-template-columns: minmax(0, 1fr); }
+  .p-hero, .p-targets, .p-features-layout, .p-everywhere-grid { grid-template-columns: minmax(0, 1fr); }
   .p-hero { min-height: 0; padding-top: 36px; }
   .p-targets { padding: 88px 0 100px; }
   .p-facts { justify-content: flex-start; }
 }
 
 @media (max-width: 640px) {
-  .p-hero, .p-facts, .p-targets { width: min(100% - 32px, 1280px); }
+  .p-hero, .p-facts, .p-targets, .p-everywhere { width: min(100% - 32px, 1280px); }
+  .p-footer { flex-direction: column; align-items: flex-start; }
   .p-hero .hero-shout { font-size: clamp(2.7rem, 12.5vw, 3.8rem); }
   .of-hint { display: none; }
   .p-zoom-context p, p.p-zoom-context { font-size: 1.05rem; }
